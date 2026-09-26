@@ -1,0 +1,72 @@
+:root {
+  --bg: #fcfcfa;
+  --ink: #2b3326;
+  --ink-soft: #6b7566;
+  --ribbon-dark: #7e9682;
+  --ribbon-light: #b9c99b;
+  --ring: rgba(126, 150, 139, 0.35);
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 165px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 118px;
+  background: linear-gradient(to bottom, #fff 0%, #fff 90%, rgba(255, 255, 255, 0) 100%);
+}
+
+.logo-mark {
+  display: block;
+  width: 45px;
+  height: 45px;
+  line-height: 0;
+}
+
+.logo-mark img {
+  display: block;
+  width: 45px;
+  height: 45px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 95px;
+  font-size: 14px;
+  color: #000;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li { white-space: nowrap; }
+
+.nav-links a {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 4px;
+  background: rgba(117, 160, 139, 0.5);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}

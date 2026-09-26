@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Kiosk Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=2">
+<style>
+  :root {
+    --page-max: 1440px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #fcfcfc;
+    color: #000000;
+    font-family: 'Figtree', sans-serif;
+  }
+
+  .page {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    position: relative;
+    height: 4838px;
+    overflow: hidden;
+  }
+
+  /* Title */
+  .kiosk-title {
+    position: absolute;
+    left: 118px;
+    top: 175px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 96px;
+  }
+
+  /* Background bouquet behind Overview / Workflows */
+  .bg-bouquet-1 {
+    position: absolute;
+    left: 601px;
+    top: 1107.25px;
+    width: 993px;
+    height: 993px;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Opening: hero image + CTA */
+  .hero-image {
+    position: absolute;
+    left: 118px;
+    top: 262px;
+    width: 1204px;
+    aspect-ratio: 3840 / 2160;
+    z-index: 1;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cta-bar {
+    position: absolute;
+    left: 118px;
+    top: 989.25px;
+    width: 1204px;
+    height: 78px;
+    background: #b6c493;
+    color: #000;
+    text-decoration: none;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .cta-bar p {
+    font-size: 32px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  /* Overview */
+  .overview {
+    position: absolute;
+    left: 118px;
+    top: 1166px;
+    width: 592px;
+    z-index: 1;
+  }
+
+  .overview h2, .section-heading {
+    font-weight: 500;
+    font-size: 64px;
+    margin: 0 0 16px;
+  }
+
+  .overview p {
+    font-size: 24px;
+    margin: 0;
+    width: 583px;
+  }
+
+  /* Workflows: key + diagram */
+  .workflow-key {
+    position: absolute;
+    left: 118px;
+    top: 1468px;
+    width: 307px;
+    z-index: 1;
+  }
+
+  .workflow-key h2 { margin-bottom: 16px; }
+
+  .key-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+  }
+
+  .key-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    width: 58px;
+  }
+
+  .key-icons p {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .key-icon-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .key-icon-stack img { display: block; width: 58px; }
+
+  .key-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    width: 155px;
+    font-size: 14px;
+  }
+
+  .key-labels p { margin: 0; }
+
+  .key-labels .group { display: flex; flex-direction: column; gap: 41px; }
+  .key-labels .subgroup { display: flex; flex-direction: column; gap: 40px; }
+  .key-labels .global-btn { display: flex; flex-direction: column; gap: 39px; }
+  .key-labels .jump p { margin: 0; }
+  .key-labels .actions { display: flex; flex-direction: column; gap: 42px; }
+
+  .workflow-cards {
+    position: absolute;
+    left: calc(25% + 64px);
+    top: 1561px;
+    width: 871px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 26px;
+    z-index: 1;
+  }
+
+  .workflow-card-1 {
+    width: 100%;
+    height: 475px;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .workflow-card-1 > img.diagram {
+    position: absolute;
+    left: -0.98%;
+    top: -2.19%;
+    width: 100.93%;
+    height: 114.74%;
+    max-width: none;
+  }
+
+  .workflow-card-1 .wf-icon-49 {
+    position: absolute;
+    left: 591px;
+    top: 272px;
+    width: 151px;
+    height: 149px;
+    object-fit: cover;
+  }
+
+  .wf-dots-vertical {
+    position: absolute;
+    left: 791px;
+    top: 186px;
+    width: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 5;
+  }
+
+  .wf-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: #a3a3a3;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease;
+  }
+
+  .wf-dot.active { background: #000; }
+
+  .wf-carousel {
+    position: relative;
+    width: 100%;
+    height: 507px;
+    overflow: hidden;
+  }
+
+  .wf-viewport {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 475px;
+    border: 5px solid #000;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .wf-track {
+    position: relative;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .wf-slide {
+    flex: 0 0 475px;
+    width: 100%;
+    height: 475px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wf-slide-simple {
+    height: 475px;
+    width: 819px;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wf-flow-image {
+    flex: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .wf-flow-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .wf-slide-simple video {
+    flex: none;
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    background: #000;
+    cursor: pointer;
+  }
+
+  /* Video lightbox (click-to-expand) */
+  .wf-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .wf-lightbox.open { display: flex; }
+
+  .wf-lightbox-inner video {
+    max-width: 90vw;
+    max-height: 85vh;
+    display: block;
+    border-radius: 12px;
+  }
+
+  .wf-lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    padding: 10px;
+    line-height: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .wf-lightbox-close img { display: block; width: 48px; height: 48px; }
+
+  /* Style Guide */
+  .style-guide {
+    position: absolute;
+    left: 118px;
+    top: 2158px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .style-guide h2 { margin-bottom: 16px; }
+
+  .style-guide-frame {
+    aspect-ratio: 1916 / 1046;
+    width: 100%;
+    border: 5px solid #000;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .style-guide-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Wireframes */
+  .wireframes {
+    position: absolute;
+    left: 118px;
+    top: 2998px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .wireframes h2 { margin-bottom: 16px; }
+
+  .wireframes-frame {
+    border: 5px solid #000;
+    border-radius: 20px;
+    height: 657px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .wf-row {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+  }
+
+  .wf-row.row-1 {
+    padding-top: 12px;
+    animation: wf-scroll-left 34s linear infinite;
+  }
+
+  .wf-row.row-2 {
+    padding-bottom: 12px;
+    animation: wf-scroll-right 34s linear infinite;
+  }
+
+  .wf-row img {
+    display: block;
+    height: 310px;
+    width: auto;
+    border: 1px solid #000;
+  }
+
+  .wf-row img.no-border { border: none; }
+
+  @keyframes wf-scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes wf-scroll-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  /* Final Prototype */
+  .final-prototype {
+    position: absolute;
+    left: 118px;
+    top: 3826px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .final-prototype h2 { margin-bottom: 16px; }
+
+  .final-prototype-frame {
+    height: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-prototype-frame img {
+    position: absolute;
+    left: 40px;
+    top: 44px;
+    width: 1123px;
+    height: 542.5px;
+    display: block;
+  }
+
+  /* Backdrop texture behind final prototype / bouquet */
+  .prototype-backdrop {
+    position: absolute;
+    left: 50%;
+    top: 3916px;
+    width: 1241px;
+    height: 972px;
+    transform: translateX(-50%);
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Back to top bouquet */
+  .back-to-top-bouquet {
+    position: absolute;
+    left: 296px;
+    top: 4478px;
+    width: 825px;
+    height: 825px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .back-to-top-bouquet.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top-bouquet img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    transform: rotate(11.49deg);
+  }
+
+  /* Back to top button */
+  .back-to-top-button {
+    position: absolute;
+    left: 696px;
+    top: 4762px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .back-to-top-button.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top-button img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wf-row.row-1, .wf-row.row-2 { animation: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo-mark" href="ribbon-pull/index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
+  <ul class="nav-links">
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Side Works</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="kiosk-title">Digital Kiosk Experience</h1>
+
+  <img class="bg-bouquet-1" src="assets/kiosk/bg-bouquet-1.png" alt="">
+
+  <div class="hero-image">
+    <img src="assets/kiosk/hero.png" alt="Digital kiosk experience preview">
+  </div>
+
+  <a class="cta-bar" href="assets/Bouqs Co. Kiosk Process Doc.pdf" target="_blank" rel="noopener">
+    <p>Open Process Document</p>
+  </a>
+
+  <div class="overview">
+    <h2>Overview</h2>
+    <p>Completed over the span of a semester (15 weeks), this project centers on designing an interactive floral kiosk for high-traffic environments such as airports and train stations.</p>
+  </div>
+
+  <div class="workflow-key">
+    <h2>Workflows</h2>
+    <div class="key-row">
+      <div class="key-icons">
+        <p>Key:</p>
+        <div class="key-icon-stack">
+          <img src="assets/kiosk/key-vector-1.svg" alt="">
+          <img src="assets/kiosk/key-user-decision.svg" alt="" style="width:30px">
+          <img src="assets/kiosk/key-user-action-1.svg" alt="">
+          <img src="assets/kiosk/key-user-action-2.svg" alt="">
+          <img src="assets/kiosk/key-user-action-3.svg" alt="">
+          <img src="assets/kiosk/key-options.svg" alt="">
+          <img src="assets/kiosk/key-vector-2.svg" alt="">
+        </div>
+      </div>
+      <div class="key-labels">
+        <p>Workflow Start</p>
+        <div class="group">
+          <p>User Decision</p>
+          <div class="subgroup">
+            <div class="global-btn">
+              <p>Global Button</p>
+              <div class="jump">
+                <p>Jump to Other</p>
+                <p>Section in Workflow</p>
+              </div>
+            </div>
+            <div class="actions">
+              <p>User Action/Key Points</p>
+              <p>User Options</p>
+            </div>
+          </div>
+        </div>
+        <p>End</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow-cards" id="workflowCards">
+    <div class="wf-carousel">
+      <div class="wf-viewport">
+      <div class="wf-track" id="wfTrack">
+        <div class="wf-slide active" data-slide="0" data-dot="0">
+          <div class="workflow-card-1">
+            <img class="diagram" src="assets/kiosk/workflow-diagram.png" alt="Main workflow diagram">
+            <img class="wf-icon-49" src="assets/kiosk/workflow-icon-49.png" alt="">
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="1" data-dot="0">
+          <div class="wf-slide-simple">
+            <video src="assets/kiosk/carousel/main-workflow-video.mp4?v=4" muted loop playsinline preload="none"></video>
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="2" data-dot="1">
+          <div class="wf-slide-simple">
+            <div class="wf-flow-image"><img src="assets/kiosk/carousel/diy-bouquet.png" alt="DIY Bouquet workflow diagram"></div>
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="3" data-dot="1">
+          <div class="wf-slide-simple">
+            <video src="assets/kiosk/carousel/diy-bouquet-video.mp4" muted loop playsinline preload="none"></video>
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="4" data-dot="2">
+          <div class="wf-slide-simple">
+            <div class="wf-flow-image"><img src="assets/kiosk/carousel/product-listing.png" alt="Product Listing workflow diagram"></div>
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="5" data-dot="2">
+          <div class="wf-slide-simple">
+            <video src="assets/kiosk/carousel/product-listing-video.mp4" muted loop playsinline preload="none"></video>
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="6" data-dot="3">
+          <div class="wf-slide-simple">
+            <div class="wf-flow-image"><img src="assets/kiosk/carousel/transaction-tunnel.png" alt="Transaction Tunnel workflow diagram"></div>
+          </div>
+        </div>
+        <div class="wf-slide" data-slide="7" data-dot="3">
+          <div class="wf-slide-simple">
+            <video src="assets/kiosk/carousel/transaction-tunnel-video.mp4" muted loop playsinline preload="none"></video>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="wf-dots-vertical">
+        <button class="wf-dot active" data-dot="0" data-step="0" aria-label="Main workflow"></button>
+        <button class="wf-dot" data-dot="1" data-step="2" aria-label="DIY Bouquet workflow"></button>
+        <button class="wf-dot" data-dot="2" data-step="4" aria-label="Product Listing workflow"></button>
+        <button class="wf-dot" data-dot="3" data-step="6" aria-label="Transaction Tunnel workflow"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-lightbox" id="wfLightbox">
+    <button class="wf-lightbox-close" id="wfLightboxClose" aria-label="Close">
+      <img src="assets/kiosk/lightbox-close-button.svg" alt="">
+    </button>
+    <div class="wf-lightbox-inner" id="wfLightboxInner"></div>
+  </div>
+
+  <div class="style-guide">
+    <h2>Style Guide</h2>
+    <div class="style-guide-frame">
+      <img src="assets/kiosk/style-guide.png" alt="Style guide">
+    </div>
+  </div>
+
+  <div class="wireframes">
+    <h2>Wireframes</h2>
+    <div class="wireframes-frame">
+      <div class="wf-row row-1">
+        <img src="assets/kiosk/wf-logo-screen.png" alt="">
+        <img src="assets/kiosk/wf-choose-location.png" alt="">
+        <img src="assets/kiosk/wf-airport.png" alt="">
+        <img src="assets/kiosk/wf-image6.png" alt="">
+        <img src="assets/kiosk/wf-image7.png" alt="">
+        <img src="assets/kiosk/wf-image8.png" alt="">
+        <img src="assets/kiosk/wf-image10.png" alt="">
+        <img src="assets/kiosk/wf-image11.png" alt="">
+        <img src="assets/kiosk/wf-logo-screen.png" alt="">
+        <img src="assets/kiosk/wf-choose-location.png" alt="">
+        <img src="assets/kiosk/wf-airport.png" alt="">
+        <img src="assets/kiosk/wf-image6.png" alt="">
+        <img src="assets/kiosk/wf-image7.png" alt="">
+        <img src="assets/kiosk/wf-image8.png" alt="">
+        <img src="assets/kiosk/wf-image10.png" alt="">
+        <img src="assets/kiosk/wf-image11.png" alt="">
+      </div>
+      <div class="wf-row row-2">
+        <img src="assets/kiosk/wf-image12.png" alt="">
+        <img src="assets/kiosk/wf-image13.png" alt="">
+        <img src="assets/kiosk/wf-image26.png" alt="">
+        <img src="assets/kiosk/wf-image25.png" alt="">
+        <img src="assets/kiosk/wf-image30.png" alt="">
+        <img src="assets/kiosk/wf-image35.png" alt="">
+        <img src="assets/kiosk/wf-image114.png" alt="" class="no-border">
+        <img src="assets/kiosk/wf-image38.png" alt="">
+        <img src="assets/kiosk/wf-image12.png" alt="">
+        <img src="assets/kiosk/wf-image13.png" alt="">
+        <img src="assets/kiosk/wf-image26.png" alt="">
+        <img src="assets/kiosk/wf-image25.png" alt="">
+        <img src="assets/kiosk/wf-image30.png" alt="">
+        <img src="assets/kiosk/wf-image35.png" alt="">
+        <img src="assets/kiosk/wf-image114.png" alt="" class="no-border">
+        <img src="assets/kiosk/wf-image38.png" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="final-prototype">
+    <h2>Final Prototype</h2>
+    <div class="final-prototype-frame">
+      <img src="assets/kiosk/final-prototype-device.png" alt="Final kiosk prototype device mockup">
+    </div>
+  </div>
+
+  <img class="prototype-backdrop" src="assets/kiosk/final-prototype-bg.png" alt="">
+
+  <div class="back-to-top-bouquet" id="backToTopBouquet">
+    <img src="assets/kiosk/back-to-top-flowers.png" alt="">
+  </div>
+
+  <button class="back-to-top-button" id="backToTopButton" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+    <img src="assets/kiosk/back-to-top-button.svg" alt="">
+  </button>
+</div>
+
+<script>
+  const bouquet = document.getElementById('backToTopBouquet');
+  const button = document.getElementById('backToTopButton');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+  observer.observe(bouquet);
+  observer.observe(button);
+
+  const wfTrack = document.getElementById('wfTrack');
+  const wfSlides = [...document.querySelectorAll('.wf-slide')];
+  const wfDots = [...document.querySelectorAll('.wf-dot')];
+  const wfLightbox = document.getElementById('wfLightbox');
+  const wfLightboxInner = document.getElementById('wfLightboxInner');
+  const wfLightboxClose = document.getElementById('wfLightboxClose');
+  let wfIndex = 0;
+  let wfLightboxOrigin = null;
+
+  function stopAllWfVideos() {
+    wfSlides.forEach((slide) => {
+      const video = slide.querySelector('video');
+      if (video) { video.pause(); }
+    });
+  }
+
+  function collapseWfVideo() {
+    const video = wfLightboxInner.querySelector('video');
+    if (!video || !wfLightboxOrigin) return;
+    wfLightboxOrigin.querySelector('.wf-slide-simple').appendChild(video);
+    wfLightbox.classList.remove('open');
+    wfLightboxOrigin = null;
+  }
+
+  function goToWfStep(step) {
+    if (step === wfIndex) return;
+    collapseWfVideo();
+    stopAllWfVideos();
+    wfIndex = step;
+    wfTrack.style.top = `-${step * 475}px`;
+    const activeSlide = wfSlides[step];
+    wfSlides.forEach((slide) => slide.classList.toggle('active', slide === activeSlide));
+    wfDots.forEach((dot) => dot.classList.toggle('active', dot.dataset.dot === activeSlide.dataset.dot));
+    const video = activeSlide.querySelector('video');
+    if (video) { video.currentTime = 0; video.play(); }
+  }
+
+  wfDots.forEach((dot) => {
+    dot.addEventListener('click', () => goToWfStep(Number(dot.dataset.step)));
+  });
+
+  const wfViewport = document.querySelector('.wf-viewport');
+  let wfWheelLocked = false;
+  let wfWheelIdleTimer = null;
+
+  wfViewport.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    clearTimeout(wfWheelIdleTimer);
+    wfWheelIdleTimer = setTimeout(() => { wfWheelLocked = false; }, 200);
+    if (wfWheelLocked) return;
+    const direction = e.deltaY > 0 ? 1 : -1;
+    let next = wfIndex + direction;
+    if (direction > 0 && wfIndex === wfSlides.length - 1) {
+      next = 0;
+    } else if (next < 0 || next > wfSlides.length - 1) {
+      return;
+    }
+    wfWheelLocked = true;
+    goToWfStep(next);
+  }, { passive: false });
+
+  document.querySelectorAll('.wf-slide-simple video').forEach((video) => {
+    video.addEventListener('click', () => {
+      wfLightboxOrigin = video.closest('.wf-slide');
+      wfLightboxInner.appendChild(video);
+      wfLightbox.classList.add('open');
+      video.play();
+    });
+  });
+
+  wfLightboxClose.addEventListener('click', collapseWfVideo);
+  wfLightbox.addEventListener('click', (e) => { if (e.target === wfLightbox) collapseWfVideo(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseWfVideo(); });
+</script>
+</body>
+</html>

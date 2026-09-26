@@ -1,0 +1,95 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ribbon-box {
+  position: relative;
+  width: min(100vw, calc(100dvh * 2280 / 1622));
+  aspect-ratio: 2280 / 1622;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ribbon-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
+}
+
+.handle {
+  position: absolute;
+  left: calc(60.1% + 15px);
+  top: calc(76.1% - 20px);
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  will-change: transform;
+}
+
+.handle.grabbing {
+  cursor: grabbing;
+}
+
+.handle.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(40px, 60px) scale(0.6) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.hint {
+  position: absolute;
+  left: calc(60.1% + 20px);
+  top: 76.1%;
+  transform: translate(-50%, 6px);
+  margin-top: 6px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.hint svg {
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.hint.hidden {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint svg { animation: none; }
+}
