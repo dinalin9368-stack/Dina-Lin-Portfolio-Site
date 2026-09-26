@@ -466,6 +466,7 @@
     height: 488px;
     transform: translate(-50%, -50%);
     display: block;
+    cursor: pointer;
   }
 
   /* Backdrop texture behind final prototype / bouquet */
@@ -772,7 +773,7 @@
   function collapseWfVideo() {
     const video = wfLightboxInner.querySelector('video');
     if (!video || !wfLightboxOrigin) return;
-    wfLightboxOrigin.querySelector('.wf-slide-simple').appendChild(video);
+    wfLightboxOrigin.appendChild(video);
     wfLightbox.classList.remove('open');
     wfLightboxOrigin = null;
   }
@@ -814,9 +815,9 @@
     goToWfStep(next);
   }, { passive: false });
 
-  document.querySelectorAll('.wf-slide-simple video').forEach((video) => {
+  document.querySelectorAll('.wf-slide-simple video, .final-prototype-frame video').forEach((video) => {
     video.addEventListener('click', () => {
-      wfLightboxOrigin = video.closest('.wf-slide');
+      wfLightboxOrigin = video.parentElement;
       wfLightboxInner.appendChild(video);
       wfLightbox.classList.add('open');
       video.play();
