@@ -374,7 +374,7 @@
   .wireframes-frame {
     border: 5px solid #000;
     border-radius: 20px;
-    height: 657px;
+    height: 666px;
     overflow: hidden;
     position: relative;
   }
@@ -391,6 +391,7 @@
   }
 
   .wf-row.row-2 {
+    margin-top: 12px;
     padding-bottom: 12px;
     animation: wf-scroll-right 34s linear infinite;
   }
@@ -420,7 +421,7 @@
     left: 118px;
     top: 3826px;
     width: 1204px;
-    z-index: 1;
+    z-index: 0;
   }
 
   .final-prototype h2 { margin-bottom: 16px; }
@@ -432,12 +433,38 @@
     overflow: hidden;
   }
 
-  .final-prototype-frame img {
+  .final-prototype-frame img,
+  .final-prototype-frame .fp-video-wrap {
     position: absolute;
-    left: 40px;
-    top: 44px;
-    width: 1123px;
-    height: 542.5px;
+    left: 96px;
+    top: 106px;
+    width: 1011px;
+    height: 488px;
+    display: block;
+  }
+
+  .final-prototype-frame img {
+    object-fit: contain;
+  }
+
+  .final-prototype-frame .fp-video-wrap {
+    overflow: hidden;
+    transform: matrix3d(
+      1.1800198, 0, 0, 0,
+      -0.051174, 0.970482, 0, -0.0001012,
+      0, 0, 1, 0,
+      -91.0, -4.0, 0, 1.0
+    );
+    transform-origin: 0 0;
+  }
+
+  .final-prototype-frame .fp-video-wrap video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 856px;
+    height: 488px;
+    transform: translate(-50%, -50%);
     display: block;
   }
 
@@ -546,7 +573,7 @@
   </div>
 
   <div class="workflow-key">
-    <h2>Workflows</h2>
+    <h2 class="section-heading">Workflows</h2>
     <div class="key-row">
       <div class="key-icons">
         <p>Key:</p>
@@ -647,14 +674,14 @@
   </div>
 
   <div class="style-guide">
-    <h2>Style Guide</h2>
+    <h2 class="section-heading">Style Guide</h2>
     <div class="style-guide-frame">
       <img src="assets/kiosk/style-guide.png" alt="Style guide">
     </div>
   </div>
 
   <div class="wireframes">
-    <h2>Wireframes</h2>
+    <h2 class="section-heading">Wireframes</h2>
     <div class="wireframes-frame">
       <div class="wf-row row-1">
         <img src="assets/kiosk/wf-logo-screen.png" alt="">
@@ -696,9 +723,11 @@
   </div>
 
   <div class="final-prototype">
-    <h2>Final Prototype</h2>
+    <h2 class="section-heading">Final Prototype</h2>
     <div class="final-prototype-frame">
-      <img src="assets/kiosk/final-prototype-device.png" alt="Final kiosk prototype device mockup">
+      <div class="fp-video-wrap">
+        <video src="assets/kiosk/final-prototype-video.mp4" muted loop autoplay playsinline preload="auto"></video>
+      </div>
     </div>
   </div>
 
