@@ -14,14 +14,18 @@
   right: 0;
   z-index: 10;
   height: 165px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 118px;
   background: linear-gradient(to bottom, #fff 0%, #fff 90%, rgba(255, 255, 255, 0) 100%);
+  transition: height 0.3s ease;
+}
+
+.nav.nav-compact {
+  height: 80px;
 }
 
 .logo-mark {
+  position: absolute;
+  left: 118px;
+  top: 60px;
   display: block;
   width: 45px;
   height: 45px;
@@ -35,6 +39,9 @@
 }
 
 .nav-links {
+  position: absolute;
+  right: 118px;
+  top: 74px;
   display: flex;
   gap: 95px;
   font-size: 14px;
