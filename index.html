@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Kiosk Experience</title>
+<title>Bouqs Co. Kiosk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
@@ -455,7 +455,8 @@
 
   .final-prototype-frame .fp-video-wrap {
     overflow: hidden;
-    transform: matrix3d(
+    /* translate + scale carry the video along with the cropped monitor picture */
+    transform: translate(-38.1px, -52.5px) scale(1.0753) matrix3d(
       1.1800198, 0, 0, 0,
       -0.051174, 0.9842189, 0, -0.0001012,
       0, 0, 1, 0,
@@ -483,9 +484,20 @@
     width: 1241px;
     height: 972px;
     transform: translateX(-50%);
-    object-fit: cover;
+    overflow: hidden;
     pointer-events: none;
     z-index: 0;
+  }
+
+  /* Same crop as the design: the visible area is x 3.5%-96.5%, y 10.8%-93.3% of the picture */
+  .prototype-backdrop img {
+    position: absolute;
+    left: -3.7634%;
+    top: -13.0909%;
+    width: 107.5269%;
+    height: 121.2121%;
+    max-width: none;
+    display: block;
   }
 
   /* Back to top bouquet */
@@ -742,7 +754,7 @@
     </div>
   </div>
 
-  <img class="prototype-backdrop" src="assets/kiosk/final-prototype-bg.png" alt="">
+  <div class="prototype-backdrop"><img src="assets/kiosk/final-prototype-bg.png" alt=""></div>
 
   <div class="back-to-top-bouquet" id="backToTopBouquet">
     <img src="assets/kiosk/back-to-top-flowers.png" alt="">
@@ -832,6 +844,29 @@
       wfLightbox.classList.add('open');
       video.play();
     });
+  });
+
+  // Once the page has loaded, buffer the carousel videos one at a time in slide order.
+  // They stay paused; goToWfStep and the lightbox are the only things that play them.
+  window.addEventListener('load', () => {
+    const wfVideos = wfSlides.map((slide) => slide.querySelector('video')).filter(Boolean);
+    const warmUp = (i) => {
+      if (i >= wfVideos.length) return;
+      const video = wfVideos[i];
+      let advanced = false;
+      const next = () => {
+        if (advanced) return;
+        advanced = true;
+        warmUp(i + 1);
+      };
+      if (!video.paused || video.readyState >= 3) { next(); return; }
+      video.addEventListener('canplaythrough', next, { once: true });
+      video.addEventListener('error', next, { once: true });
+      setTimeout(next, 20000);
+      video.preload = 'auto';
+      video.load();
+    };
+    warmUp(0);
   });
 
   wfLightboxClose.addEventListener('click', collapseWfVideo);
