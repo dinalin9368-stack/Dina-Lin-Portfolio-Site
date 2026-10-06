@@ -1,3 +1,4 @@
+const heroPanel = document.querySelector('.hero-panel');
 const heroVideo = document.querySelector('.hero-panel-video');
 const heroPlayBtn = document.getElementById('heroPlayBtn');
 const heroMuteBtn = document.getElementById('heroMuteBtn');
@@ -11,9 +12,7 @@ if (heroVideo) {
     heroMuteBtn?.classList.add('is-muted');
     heroVideo.play().catch(() => {});
   });
-}
 
-if (heroVideo) {
   const unmuteOnFirstInteraction = () => {
     if (autoMuted) {
       autoMuted = false;
@@ -44,25 +43,6 @@ if (heroVideo && heroPlayBtn && heroMuteBtn) {
   });
 }
 
-const nav = document.querySelector('.nav');
-const heroPanel = document.querySelector('.hero-panel');
-
-if (heroPanel) {
-  const heroBottom = heroPanel.getBoundingClientRect().bottom + window.scrollY;
-  window.scrollTo(0, heroBottom - window.innerHeight);
-}
-
-if (nav && heroPanel) {
-  const updateNavCompact = () => {
-    const rect = heroPanel.getBoundingClientRect();
-    const midpoint = rect.top + rect.height / 2;
-    nav.classList.toggle('nav-compact', midpoint > 0);
-  };
-  updateNavCompact();
-  window.addEventListener('scroll', updateNavCompact, { passive: true });
-  window.addEventListener('resize', updateNavCompact);
-}
-
 if (heroVideo && heroPanel) {
   let autoPaused = false;
 
@@ -83,18 +63,3 @@ if (heroVideo && heroPanel) {
     autoPaused = false;
   });
 }
-
-const backToTop = document.getElementById('backToTop');
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    backToTop.classList.toggle('visible', entry.isIntersecting);
-  });
-}, { threshold: 0.2 });
-
-observer.observe(backToTop);
-
-backToTop.addEventListener('click', (e) => {
-  e.preventDefault();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});

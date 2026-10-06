@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="nav.css?v=4">
-<link rel="stylesheet" href="home.css?v=2">
+<link rel="stylesheet" href="home.css?v=39">
 </head>
 <body>
 <nav class="nav">
@@ -21,9 +21,9 @@
 </nav>
 
 <div class="home">
-  <div class="deco deco-1"><img src="assets/home/ribbon-deco-1.svg" alt=""></div>
-  <div class="deco deco-2"><img src="assets/home/ribbon-deco-2.svg" alt=""></div>
-  <div class="deco deco-3"><img src="assets/home/ribbon-deco-3.svg" alt=""></div>
+  <canvas class="deco deco-bow" id="bowCanvas" width="1548" height="764"></canvas>
+  <canvas class="deco deco-bow3" id="bow3Canvas" width="1520" height="996"></canvas>
+  <canvas class="deco deco-bow2" id="bow2Canvas" width="2024" height="764"></canvas>
 
   <div class="hero-panel">
     <video class="hero-panel-video" src="assets/home/demo-reel.mp4" autoplay playsinline preload="auto"></video>
@@ -42,14 +42,26 @@
   <div class="circle circle-alaska">
     <img class="fill" src="assets/home/alaska-badge.png" alt="Alaska Digital ID badge">
   </div>
+  <canvas class="ring-hover ring-alaska" id="alaskaRingsCanvas" width="700" height="700"></canvas>
 
   <p class="project-title title-bouqs">Bouqs Co. Kiosk</p>
   <p class="project-title title-alaska">Alaska Digital ID</p>
   <p class="project-title title-homealone">Home Alone2 Title Sequence</p>
 
-  <p class="project-desc desc-bouqs">Completed over the span of a semester (15 weeks), this project centers on designing an interactive floral kiosk for high-traffic environments such as airports and train stations.</p>
-  <p class="project-desc desc-alaska">Creating a smartphone-based digital driver's license concept with the selected state of Alaska. Completed over the span of 6 weeks.</p>
-  <p class="project-desc desc-homealone">Completed in 6 weeks, recreating a title sequence of the classic movie Home Alone 2.</p>
+  <div class="project-text text-bouqs">
+    <p class="project-desc">A kiosk concept for The Bouqs Co. that lets travelers order bouquets while they wait and pick them up when they arrive.</p>
+    <a class="project-btn" href="../index.html">Check it out</a>
+  </div>
+
+  <div class="project-text text-alaska">
+    <p class="project-desc">Creating a smartphone-based digital driver’s license concept with the selected state of Alaska. Completed over the span of 6 weeks.</p>
+    <span class="project-btn">Check it out</span>
+  </div>
+
+  <div class="project-text text-homealone">
+    <p class="project-desc">Completed in 6 weeks, recreating a title sequence of the classic movie Home Alone 2.</p>
+    <span class="project-btn">Check it out</span>
+  </div>
 
   <a class="back-to-top" id="backToTop" href="#top" aria-label="Back to top">
     <img src="assets/home/back-to-top.svg" alt="">
@@ -60,6 +72,7 @@
   <a class="circle circle-bouqs" href="../index.html" aria-label="View the Bouqs Co. Kiosk case study">
     <img class="fill" src="assets/home/bouqs-combined.png" alt="The Bouqs Co.">
   </a>
+  <canvas class="ring-hover ring-bouqs" id="bouqsRingsCanvas" width="700" height="700"></canvas>
 
   <div class="circle circle-homealone">
     <img class="fill" src="assets/home/homealone-poster.png" alt="Home Alone 2 Title Sequence poster">
@@ -68,8 +81,14 @@
       <img class="sparkle-star" src="assets/home/sparkle-star.svg" alt="">
     </div>
   </div>
+  <canvas class="ring-hover ring-homealone" id="homealoneRingsCanvas" width="700" height="700"></canvas>
 </div>
 
-<script src="home.js?v=9"></script>
+<script src="js/hero-video.js?v=1"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="js/scroll-sequence.js?v=2"></script>
+<script src="js/ribbons.js?v=6"></script>
+<script src="js/back-to-top.js?v=1"></script>
+<script src="js/ring-hover.js?v=4"></script>
 </body>
 </html>
