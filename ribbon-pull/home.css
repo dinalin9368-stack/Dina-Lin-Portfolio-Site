@@ -359,3 +359,13 @@ a.project-btn { cursor: pointer; }
 
 .intro-role { left: 810px; top: 3704px; }
 .intro-tagline { left: 141px; top: 3828px; }
+
+/* wave text: the letters are moved by js/wave-text.js as the cursor moves along the word */
+.wave-word,
+.wave-letter { display: inline-block; }
+
+.wave-letter { transition: transform 0.22s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-letter { transition: none; }
+}

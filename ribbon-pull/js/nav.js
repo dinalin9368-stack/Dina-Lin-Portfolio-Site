@@ -1,7 +1,8 @@
 const nav = document.querySelector('.nav');
 
 if (heroPanel) {
-  const heroBottom = heroPanel.getBoundingClientRect().bottom + window.scrollY;
+  // layout position (ignores the entrance slide), converted to on-screen pixels
+  const heroBottom = (heroPanel.offsetTop + heroPanel.offsetHeight) * (window.pageScale || 1);
   window.scrollTo(0, heroBottom - window.innerHeight);
 }
 

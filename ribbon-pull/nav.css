@@ -7,6 +7,43 @@
   --ring: rgba(126, 150, 139, 0.35);
 }
 
+/* page entrance: the content slides up a little while a cover in the page colour fades away.
+   Fading a cover is far cheaper than blending the whole tall page, which kept it smooth. The nav stays still. */
+@keyframes page-slide {
+  from { transform: translateY(24px); }
+}
+
+@keyframes page-reveal {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.home,
+.page,
+.stage {
+  animation: page-slide 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) backwards;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  background: inherit;
+  animation: page-reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home,
+  .page,
+  .stage { animation: none; }
+
+  body::before { display: none; }
+}
+
 html.scale-page { zoom: var(--page-scale, 1); }
 html.scale-nav .nav { zoom: var(--page-scale, 1); }
 

@@ -14,14 +14,14 @@ function ownPositionStart(canvasId) {
   };
 }
 
-// Starts when the gap between the 2nd and 3rd project circles reaches the middle of the viewport.
-function betweenCirclesStart() {
-  const secondCircle = document.querySelector('.circle-alaska');
-  const thirdCircle = document.querySelector('.circle-homealone');
+// The scroll position where the Home Alone circle's centre is 39.7% of the way down the window
+// (the circle sits in the upper half, its top just under the nav, with its title and button beside it).
+function homeAloneCircleInPlace() {
+  const circle = document.querySelector('.circle-homealone');
   return () => {
-    if (!secondCircle || !thirdCircle) return 0;
-    const gapMiddle = (pageBottom(secondCircle) + pageTop(thirdCircle)) / 2;
-    return gapMiddle - window.innerHeight / 2;
+    if (!circle) return 0;
+    const centre = pageTop(circle) + circle.getBoundingClientRect().height / 2;
+    return centre - window.innerHeight * 0.397;
   };
 }
 
@@ -41,16 +41,15 @@ initScrollSequence({
   scrollDistance: scaled(700),
 });
 
-// Finishes exactly at the bottom of the page, over the same 700 design px as the other ribbons.
-// Starts no later than the gap between the circles, earlier if the page is too short.
+// Finishes when the Home Alone circle is in place, over the same 700 design px as the other ribbons,
+// so it starts about 700 design px of scrolling before that.
 const bow3Distance = scaled(700);
-const bow3GapStart = betweenCirclesStart();
-const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+const bow3End = homeAloneCircleInPlace();
 
 initScrollSequence({
   canvasId: 'bow3Canvas',
   folder: 'bow3-frames',
   frameCount: 46,
-  getScrollStart: () => Math.min(bow3GapStart(), maxScroll() - bow3Distance()),
+  getScrollStart: () => bow3End() - bow3Distance(),
   scrollDistance: bow3Distance,
 });

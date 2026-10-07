@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ribbon-pull/nav.css?v=5">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=8">
 <style>
   :root {
     --page-max: 1440px;
@@ -867,7 +867,7 @@
       video.preload = 'auto';
       video.load();
     };
-    warmUp(0);
+    setTimeout(() => warmUp(0), 1200);
   });
 
   wfLightboxClose.addEventListener('click', collapseWfVideo);
