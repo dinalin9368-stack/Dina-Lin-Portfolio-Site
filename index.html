@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="ribbon-pull/js/scale.js?v=1" data-mode="page"></script>
 <title>Bouqs Co. Kiosk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ribbon-pull/nav.css?v=4">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=5">
 <style>
   :root {
     --page-max: 1440px;
@@ -321,8 +322,8 @@
   .wf-lightbox.open { display: flex; }
 
   .wf-lightbox-inner video {
-    max-width: 90vw;
-    max-height: 85vh;
+    max-width: calc(90vw / var(--page-scale, 1));
+    max-height: calc(85vh / var(--page-scale, 1));
     display: block;
     border-radius: 12px;
   }
@@ -810,7 +811,7 @@
     wfSlides.forEach((slide) => slide.classList.toggle('active', slide === activeSlide));
     wfDots.forEach((dot) => dot.classList.toggle('active', dot.dataset.dot === activeSlide.dataset.dot));
     const video = activeSlide.querySelector('video');
-    if (video) { video.currentTime = 0; video.play(); }
+    if (video) { video.currentTime = 0; video.play().catch(() => {}); }
   }
 
   wfDots.forEach((dot) => {
@@ -842,7 +843,7 @@
       wfLightboxOrigin = video.parentElement;
       wfLightboxInner.appendChild(video);
       wfLightbox.classList.add('open');
-      video.play();
+      video.play().catch(() => {});
     });
   });
 

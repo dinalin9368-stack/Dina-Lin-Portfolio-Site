@@ -7,6 +7,9 @@
   --ring: rgba(126, 150, 139, 0.35);
 }
 
+html.scale-page { zoom: var(--page-scale, 1); }
+html.scale-nav .nav { zoom: var(--page-scale, 1); }
+
 .nav {
   position: fixed;
   top: 0;

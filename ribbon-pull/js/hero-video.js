@@ -27,7 +27,7 @@ if (heroVideo) {
 if (heroVideo && heroPlayBtn && heroMuteBtn) {
   heroPlayBtn.addEventListener('click', () => {
     if (heroVideo.paused) {
-      heroVideo.play();
+      heroVideo.play().catch(() => {});
     } else {
       heroVideo.pause();
     }

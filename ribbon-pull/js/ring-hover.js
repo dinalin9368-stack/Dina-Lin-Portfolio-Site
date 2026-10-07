@@ -8,11 +8,20 @@ function initRingHover({ circleSelector, canvasId, folder, frameCount, duration 
   const dpr = window.devicePixelRatio || 1;
   const displayWidth = canvas.width;
   const displayHeight = canvas.height;
-  canvas.width = displayWidth * dpr;
-  canvas.height = displayHeight * dpr;
   canvas.style.width = `${displayWidth}px`;
   canvas.style.height = `${displayHeight}px`;
-  ctx.scale(dpr, dpr);
+
+  let drawnFrame = -1;
+
+  // The backing store follows the on-screen size, capped at 2x because the frames have no more detail than that.
+  const sizeBackingStore = () => {
+    const ratio = Math.min(dpr * (window.pageScale || 1), 2);
+    canvas.width = Math.round(displayWidth * ratio);
+    canvas.height = Math.round(displayHeight * ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    drawnFrame = -1;
+  };
+  sizeBackingStore();
 
   const frames = [];
   for (let i = 1; i <= frameCount; i++) {
@@ -24,7 +33,6 @@ function initRingHover({ circleSelector, canvasId, folder, frameCount, duration 
   const lastFrame = frameCount - 1;
   let position = 0;
   let target = 0;
-  let drawnFrame = -1;
   let lastTime = null;
   let rafId = null;
 
@@ -57,6 +65,11 @@ function initRingHover({ circleSelector, canvasId, folder, frameCount, duration 
     target = value;
     if (rafId === null) rafId = requestAnimationFrame(tick);
   };
+
+  window.addEventListener('pagescale', () => {
+    sizeBackingStore();
+    draw();
+  });
 
   circle.addEventListener('mouseenter', () => playTo(lastFrame));
   circle.addEventListener('mouseleave', () => playTo(0));

@@ -6,11 +6,20 @@ function initScrollSequence({ canvasId, folder, frameCount, getScrollStart, scro
   const dpr = window.devicePixelRatio || 1;
   const displayWidth = canvas.width;
   const displayHeight = canvas.height;
-  canvas.width = displayWidth * dpr;
-  canvas.height = displayHeight * dpr;
   canvas.style.width = `${displayWidth}px`;
   canvas.style.height = `${displayHeight}px`;
-  ctx.scale(dpr, dpr);
+
+  let currentFrame = -1;
+
+  // The backing store follows the on-screen size, capped at 2x because the frames have no more detail than that.
+  const sizeBackingStore = () => {
+    const ratio = Math.min(dpr * (window.pageScale || 1), 2);
+    canvas.width = Math.round(displayWidth * ratio);
+    canvas.height = Math.round(displayHeight * ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    currentFrame = -1;
+  };
+  sizeBackingStore();
 
   const frames = [];
   const loadPromises = [];
@@ -24,7 +33,6 @@ function initScrollSequence({ canvasId, folder, frameCount, getScrollStart, scro
     frames.push(img);
   }
 
-  let currentFrame = -1;
   const drawFrame = (index) => {
     if (index === currentFrame) return;
     currentFrame = index;
@@ -43,5 +51,14 @@ function initScrollSequence({ canvasId, folder, frameCount, getScrollStart, scro
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
+
+    let resizeTimer = null;
+    window.addEventListener('pagescale', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        sizeBackingStore();
+        update();
+      }, 60);
+    });
   });
 }

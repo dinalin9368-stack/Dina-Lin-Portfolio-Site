@@ -11,7 +11,7 @@ html, body {
 .home {
   position: relative;
   width: 1440px;
-  height: 3355px;
+  height: 4242px;
   margin: 0 auto;
   overflow-x: visible;
   overflow-y: clip;
@@ -31,11 +31,11 @@ html, body {
   max-width: none;
 }
 
-.deco-bow { left: -253px; top: 836px; width: 1548px; height: 764px; }
+.deco-bow { left: -253px; top: 886px; width: 1548px; height: 764px; }
 
-.deco-bow2 { left: -386px; top: 1890px; width: 2024px; height: 764px; }
+.deco-bow2 { left: -386px; top: 1940px; width: 2024px; height: 764px; }
 
-.deco-bow3 { left: 368px; top: 2453px; width: 1520px; height: 996px; }
+.deco-bow3 { left: 368px; top: 2503px; width: 1520px; height: 996px; }
 
 /* hero */
 .hero-panel {
@@ -124,7 +124,7 @@ html, body {
 .projects-heading {
   position: absolute;
   left: 128px;
-  top: 1013px;
+  top: 1063px;
   margin: 0;
   font-family: 'Figtree', sans-serif;
   font-weight: 700;
@@ -153,12 +153,12 @@ a.circle {
   object-fit: cover;
 }
 
-.circle-bouqs { left: 118px; top: 1235px; }
+.circle-bouqs { left: 118px; top: 1285px; }
 
-.circle-alaska { left: 730px; top: 1847px; }
+.circle-alaska { left: 730px; top: 1897px; }
 .circle-alaska img.fill { object-position: 50% 49.5%; }
 
-.circle-homealone { left: 118px; top: 2559px; background: #00192f; }
+.circle-homealone { left: 118px; top: 2609px; background: #00192f; }
 .circle-homealone img.fill { object-position: 50% 46%; }
 .circle-homealone .sparkle {
   position: absolute;
@@ -189,9 +189,9 @@ a.circle {
   pointer-events: none;
 }
 
-.ring-bouqs { left: 64px; top: 1181px; width: 700px; height: 700px; }
-.ring-alaska { left: 676px; top: 1793px; width: 700px; height: 700px; }
-.ring-homealone { left: 64px; top: 2505px; width: 700px; height: 700px; }
+.ring-bouqs { left: 64px; top: 1231px; width: 700px; height: 700px; }
+.ring-alaska { left: 676px; top: 1843px; width: 700px; height: 700px; }
+.ring-homealone { left: 64px; top: 2555px; width: 700px; height: 700px; }
 
 /* project copy */
 .project-title {
@@ -219,14 +219,18 @@ a.circle {
   line-height: normal;
 }
 
-.title-bouqs { left: 730px; top: 1410px; }
-.text-bouqs { left: 750px; top: 1507px; }
+.title-bouqs { left: 730px; top: 1460px; }
+.text-bouqs { left: 750px; top: 1557px; }
 
-.title-alaska { left: 163px; top: 2022px; }
-.text-alaska { left: 183px; top: 2119px; }
+.title-alaska { left: 163px; top: 2072px; }
+.text-alaska { left: 183px; top: 2169px; }
 
-.title-homealone { left: 730px; top: 2695px; width: 462px; }
-.text-homealone { left: 750px; top: 2869px; }
+.title-homealone { left: 730px; top: 2745px; width: 462px; }
+.text-homealone { left: 750px; top: 2919px; }
+
+/* description box heights from the design, so each button sits 16px under its box (Bouqs fits its text) */
+.text-alaska .project-desc { height: 117px; }
+.text-homealone .project-desc { height: 91px; }
 
 /* project buttons */
 .project-btn {
@@ -238,7 +242,7 @@ a.circle {
   width: 196px;
   height: 67px;
   padding: 19px 32px;
-  border: 2px solid #000;
+  border: 2px solid transparent;
   border-radius: 10px;
   font-family: 'Figtree', sans-serif;
   font-weight: 400;
@@ -250,13 +254,60 @@ a.circle {
 
 a.project-btn { cursor: pointer; }
 
+/* the dashed outline and the solid trace are the same SVG shape, so the solid line fully covers the dashes;
+   on hover the solid line traces around the button, and traces back on leave */
+.project-btn {
+  position: relative;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* pressed: black fill, white text */
+.project-btn:active {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn-trace {
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 196px;
+  height: 67px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.btn-trace rect {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2;
+}
+
+.btn-trace .btn-dash { stroke-dasharray: 4 4; }
+
+.btn-trace .btn-solid {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.project-btn:hover .btn-solid,
+.project-btn:focus-visible .btn-solid {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-trace .btn-solid { transition: none; }
+  .project-btn { transition: none; }
+}
+
 .text-alaska .project-btn { align-self: flex-start; }
 
 /* back to top */
 .back-to-top {
   position: absolute;
   left: 50%;
-  top: 3229px;
+  top: 4116px;
   width: 48px;
   height: 48px;
   transform: translateX(-50%) translateY(16px);
@@ -278,3 +329,33 @@ a.project-btn { cursor: pointer; }
 .back-to-top.visible:hover {
   transform: translateX(-50%) translateY(-10px);
 }
+
+/* closing intro */
+.intro-name {
+  position: absolute;
+  margin: 0;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  font-size: 300px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.intro-name .accent { color: #75a08b; }
+
+.intro-dina { left: 118px; top: 3495px; }
+.intro-lin { left: 911px; top: 3783px; }
+
+.intro-role,
+.intro-tagline {
+  position: absolute;
+  margin: 0;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.intro-role { left: 810px; top: 3704px; }
+.intro-tagline { left: 141px; top: 3828px; }

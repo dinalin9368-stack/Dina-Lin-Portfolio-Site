@@ -1,7 +1,9 @@
 const pageTop = (el) => el.getBoundingClientRect().top + window.scrollY;
 const pageBottom = (el) => el.getBoundingClientRect().bottom + window.scrollY;
+const scaled = (designPx) => () => designPx * (window.pageScale || 1);
 
-const heroBottomPage = heroPanel ? pageBottom(heroPanel) : 0;
+// Starts when the video's bottom edge reaches the bottom of the viewport.
+const heroBottomPage = () => (heroPanel ? pageBottom(heroPanel) : 0);
 
 // Starts when the canvas's top edge enters the bottom of the viewport.
 function ownPositionStart(canvasId) {
@@ -27,8 +29,8 @@ initScrollSequence({
   canvasId: 'bowCanvas',
   folder: 'bow-frames',
   frameCount: 51,
-  getScrollStart: () => heroBottomPage - window.innerHeight,
-  scrollDistance: 700,
+  getScrollStart: () => heroBottomPage() - window.innerHeight,
+  scrollDistance: scaled(700),
 });
 
 initScrollSequence({
@@ -36,12 +38,12 @@ initScrollSequence({
   folder: 'bow2-frames',
   frameCount: 46,
   getScrollStart: ownPositionStart('bow2Canvas'),
-  scrollDistance: 700,
+  scrollDistance: scaled(700),
 });
 
-// Finishes exactly at the bottom of the page, over the same 700px as the other ribbons.
+// Finishes exactly at the bottom of the page, over the same 700 design px as the other ribbons.
 // Starts no later than the gap between the circles, earlier if the page is too short.
-const bow3Distance = 700;
+const bow3Distance = scaled(700);
 const bow3GapStart = betweenCirclesStart();
 const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
 
@@ -49,6 +51,6 @@ initScrollSequence({
   canvasId: 'bow3Canvas',
   folder: 'bow3-frames',
   frameCount: 46,
-  getScrollStart: () => Math.min(bow3GapStart(), maxScroll() - bow3Distance),
+  getScrollStart: () => Math.min(bow3GapStart(), maxScroll() - bow3Distance()),
   scrollDistance: bow3Distance,
 });
