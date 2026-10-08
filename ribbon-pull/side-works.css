@@ -1,0 +1,373 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: #fcfcfc;
+  color: #000;
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+.sw-page {
+  position: relative;
+  width: 1440px;
+  height: 5459px;
+  margin: 0 auto;
+  overflow: clip;
+}
+
+.sw-title {
+  position: absolute;
+  left: 108px;
+  top: 165px;
+  margin: 0;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 96px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+/* strips (flyers and craft rows): a frame cut off at the edges of the content column; the strip slides left by
+   itself (js/flyer-marquee.js) and can be scrolled sideways, so it is a scroller with no visible scrollbar */
+.marquee {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  outline: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.marquee::-webkit-scrollbar { display: none; }
+.marquee.is-dragging { cursor: grabbing; }
+
+.marquee-track {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: max-content;
+}
+
+.flyers {
+  position: absolute;
+  left: 118px;
+  top: 390px;
+  width: 1204px;
+  height: 550px;
+}
+
+.flyer {
+  flex: none;
+  display: block;
+  width: 439px;
+  height: 549px;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+
+.flyer-nudge { margin-top: 1px; }
+
+/* section copy */
+.sw-text {
+  position: absolute;
+  left: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.sw-subtitle {
+  flex: none;
+  margin: 0;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: normal;
+}
+
+.sw-desc {
+  flex: none;
+  margin: 0;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: normal;
+}
+
+.sw-desc em {
+  font-weight: 300;
+  font-style: italic;
+}
+
+.text-acs { top: 960px; width: 630px; }
+.text-acs .sw-desc { width: 630px; height: 119px; }
+
+.text-photo { top: 2567px; width: 551px; }
+.text-photo .sw-desc { width: 579px; height: 119px; }
+
+.text-crafts { top: 3662px; width: 630px; }
+.text-crafts .sw-desc { width: 579px; }
+
+.sw-arrow {
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  transform: rotate(-90deg);
+  cursor: pointer;
+  outline: none;
+}
+
+.arrow-acs { left: 764px; top: 986px; }
+.arrow-photo { left: 514px; top: 2599px; }
+
+/* the note beside each arrow appears while the arrow is hovered or focused. Its box starts at the arrow's right
+   edge, so the cursor can cross over to it (and the Instagram link) without it disappearing */
+.sw-caption {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin: 0;
+  padding-left: 16px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: normal;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.caption-acs { left: 788px; top: 986px; }
+.caption-photo { left: 538px; top: 2599px; }
+
+.sw-arrow:hover + .sw-caption,
+.sw-arrow:focus-visible + .sw-caption,
+.sw-caption:hover,
+.sw-caption:focus-within {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* no hover on touch screens, so the notes stay visible there */
+@media (hover: none) {
+  .sw-caption {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-caption { transition: none; }
+}
+
+.sw-caption a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+/* photo grid: a frame that shows the top of a taller grid; scrolling inside it moves down the rest */
+.photo-grid {
+  position: absolute;
+  left: 118px;
+  top: 1226px;
+  width: 1204px;
+  height: 1321px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.photo-grid::-webkit-scrollbar { display: none; }
+
+.photo-grid-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1204px;
+  height: 4627.75px;
+}
+
+.photo-grid-inner img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* crafts: two staggered rows that slide at their own speeds, cut off at both edges of the content column */
+.crafts-grid {
+  position: absolute;
+  left: 118px;
+  top: 2869px;
+  width: 1204px;
+  height: 768px;
+  overflow: clip;
+}
+
+.craft-row {
+  position: absolute;
+  left: 0;
+  width: 1204px;
+  height: 370px;
+}
+
+.craft {
+  position: relative;
+  flex: none;
+  width: 594px;
+  height: 370px;
+  border-radius: 10px;
+  overflow: clip;
+}
+
+.craft-img,
+.craft-panel {
+  position: absolute;
+}
+
+.craft-img { overflow: hidden; }
+
+.craft-img img {
+  position: absolute;
+  -webkit-user-drag: none;
+  display: block;
+  max-width: none;
+}
+
+.craft-img img.cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.craft-panel { background: #fff; }
+
+.craft-title,
+.craft-tools {
+  position: absolute;
+  margin: 0;
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.craft-title { font-size: 32px; }
+.craft-title span { display: block; }
+.craft-tools { font-size: 14px; }
+
+/* back to top */
+.back-to-top {
+  position: absolute;
+  left: 50%;
+  top: 5333px;
+  width: 48px;
+  height: 48px;
+  transform: translateX(-50%) translateY(16px);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.back-to-top img {
+  position: absolute;
+  inset: -4.17%;
+  display: block;
+  width: 108.34%;
+  height: 108.34%;
+  max-width: none;
+}
+
+.back-to-top.visible:hover {
+  transform: translateX(-50%) translateY(-10px);
+}
+
+/* enlarge on click */
+.flyer,
+.photo-grid-inner img,
+.craft { cursor: pointer; }
+
+.marquee.is-dragging,
+.marquee.is-dragging * { cursor: grabbing; }
+
+.flyer:focus-visible,
+.photo-grid-inner img:focus-visible,
+.craft:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 4px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.94);
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.lightbox.open .lightbox-stage { transform: scale(1); }
+
+.lightbox-image {
+  display: block;
+  max-width: none;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.lightbox-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  flex: none;
+  transform-origin: 0 0;
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  padding: 10px;
+  line-height: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.lightbox-close img { display: block; width: 48px; height: 48px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox-stage { transition: none; }
+}
