@@ -77,7 +77,7 @@ html, body {
   transition: opacity 0.3s ease;
 }
 
-.hint svg {
+.hint img {
   animation: bob 1.6s ease-in-out infinite;
 }
 
@@ -91,5 +91,5 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hint svg { animation: none; }
+  .hint img { animation: none; }
 }
