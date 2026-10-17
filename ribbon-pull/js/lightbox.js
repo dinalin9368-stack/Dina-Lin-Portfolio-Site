@@ -59,7 +59,7 @@ const openLightbox = (source) => {
     lightboxFit = () => {
       const room = lightboxRoom();
       const scale = Math.min(room.width / 594, room.height / 370, 1.8);
-      card.style.transform = `scale(${scale})`;
+      card.style.zoom = scale;   // re-lays the card out at the larger size, which keeps every edge crisp
       lightboxStage.style.width = `${594 * scale}px`;
       lightboxStage.style.height = `${370 * scale}px`;
     };

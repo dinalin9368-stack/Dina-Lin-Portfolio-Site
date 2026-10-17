@@ -3,7 +3,7 @@
 html, body {
   margin: 0;
   height: 100%;
-  background: var(--bg);
+  background: #fff;
   color: var(--ink);
   font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;

@@ -2,7 +2,7 @@
 
 html, body {
   margin: 0;
-  background: #fcfcfc;
+  background: #fff;
   color: #000;
   font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow-x: hidden;
@@ -350,7 +350,6 @@ html, body {
   left: 0;
   top: 0;
   flex: none;
-  transform-origin: 0 0;
   cursor: default;
 }
 

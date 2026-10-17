@@ -1,5 +1,4 @@
 :root {
-  --bg: #fcfcfa;
   --ink: #2b3326;
   --ink-soft: #6b7566;
   --ribbon-dark: #7e9682;
@@ -53,13 +52,8 @@ html.scale-nav .nav { zoom: var(--page-scale, 1); }
   left: 0;
   right: 0;
   z-index: 10;
-  height: 165px;
-  background: linear-gradient(to bottom, #fff 0%, #fff 90%, rgba(255, 255, 255, 0) 100%);
-  transition: height 0.3s ease;
-}
-
-.nav.nav-compact {
-  height: 80px;
+  height: 124px;
+  background: #fff;
 }
 
 .logo-mark {
