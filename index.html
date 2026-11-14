@@ -31,7 +31,7 @@
     max-width: var(--page-max);
     margin: 0 auto;
     position: relative;
-    height: 4838px;
+    height: 4710px;
     overflow-x: visible;
     overflow-y: clip;
   }
@@ -40,9 +40,10 @@
   .kiosk-title {
     position: absolute;
     left: 118px;
-    top: 175px;
+    top: 125px;
     margin: 0;
-    font-weight: 700;
+    font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
+    font-weight: 500;
     font-size: 96px;
     z-index: 2;
   }
@@ -51,7 +52,7 @@
   .bg-bouquet-1 {
     position: absolute;
     left: 601px;
-    top: 1107.25px;
+    top: 929.25px;
     width: 993px;
     height: 993px;
     object-fit: cover;
@@ -63,7 +64,7 @@
   .hero-image {
     position: absolute;
     left: 118px;
-    top: 262px;
+    top: 202px;
     width: 1204px;
     aspect-ratio: 3840 / 2160;
     z-index: 1;
@@ -76,33 +77,40 @@
     display: block;
   }
 
-  .cta-bar {
+  /* Process Doc. tag: sits in front of the bouquet. Once it has scrolled up past two thirds of the screen it
+     stays pinned at that height. When the Workflows section reaches it, it tucks to the right edge (only the tip
+     shows); hovering brings it back out. Before the first scroll it waits off the right edge and slides in. */
+  .process-tag {
     position: absolute;
-    left: 118px;
-    top: 989.25px;
-    width: 1204px;
-    height: 78px;
-    background: #194641;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
+    left: 1145.62px;
+    top: 911px;
+    width: 304.38px;
+    height: 65.4215px;
+    display: block;
+    line-height: 0;
+    z-index: 8;
+    transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
-  .cta-bar p {
-    font-size: 32px;
-    font-weight: 400;
-    margin: 0;
+  .process-tag img {
+    display: block;
+    width: 304.38px;
+    height: 65.4215px;
   }
+
+  .process-tag.is-pinned { position: fixed; }
+
+  .process-tag.is-away { transform: translateX(100%); }
+
+  .process-tag.is-tucked:not(:hover):not(:focus-visible) { transform: translateX(211.38px); }
+
+  .process-tag:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
 
   /* Overview */
   .overview {
     position: absolute;
     left: 118px;
-    top: 1166px;
+    top: 988px;
     width: 592px;
     z-index: 1;
   }
@@ -123,7 +131,7 @@
   .workflow-key {
     position: absolute;
     left: 118px;
-    top: 1468px;
+    top: 1290px;
     width: 307px;
     z-index: 1;
   }
@@ -178,7 +186,7 @@
   .workflow-cards {
     position: absolute;
     left: calc(25% + 64px);
-    top: 1561px;
+    top: 1383px;
     width: 871px;
     display: flex;
     flex-direction: column;
@@ -345,7 +353,7 @@
   .style-guide {
     position: absolute;
     left: 118px;
-    top: 2158px;
+    top: 1980px;
     width: 1204px;
     z-index: 1;
   }
@@ -371,7 +379,7 @@
   .wireframes {
     position: absolute;
     left: 118px;
-    top: 2998px;
+    top: 2820px;
     width: 1204px;
     z-index: 1;
   }
@@ -426,7 +434,7 @@
   .final-prototype {
     position: absolute;
     left: 118px;
-    top: 3826px;
+    top: 3648px;
     width: 1204px;
     z-index: 0;
   }
@@ -481,7 +489,7 @@
   .prototype-backdrop {
     position: absolute;
     left: 50%;
-    top: 3916px;
+    top: 3738px;
     width: 1241px;
     height: 972px;
     transform: translateX(-50%);
@@ -505,7 +513,7 @@
   .back-to-top-bouquet {
     position: absolute;
     left: 296px;
-    top: 4478px;
+    top: 4299.65px;
     width: 825px;
     height: 825px;
     display: flex;
@@ -534,7 +542,7 @@
   .back-to-top-button {
     position: absolute;
     left: 696px;
-    top: 4762px;
+    bottom: 78px;
     width: 48px;
     height: 48px;
     cursor: pointer;
@@ -587,8 +595,8 @@
     <img src="assets/kiosk/hero.png" alt="Digital kiosk experience preview">
   </div>
 
-  <a class="cta-bar" href="assets/Bouqs Co. Kiosk Process Doc.pdf" target="_blank" rel="noopener">
-    <p>Open Process Document</p>
+  <a class="process-tag is-away" id="processTag" href="assets/Bouqs Co. Kiosk Process Doc.pdf" target="_blank" rel="noopener" aria-label="Process Doc. (opens the process document)">
+    <img src="assets/kiosk/process-doc.svg" alt="" width="356" height="76.5163">
   </a>
 
   <div class="overview">
@@ -873,6 +881,37 @@
   wfLightboxClose.addEventListener('click', collapseWfVideo);
   wfLightbox.addEventListener('click', (e) => { if (e.target === wfLightbox) collapseWfVideo(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseWfVideo(); });
+</script>
+<script>
+  // Process Doc. tag: in its place on the page until it has scrolled up past two thirds of the screen; after that it
+  // stays pinned at that height, and once the Workflows heading reaches it, CSS tucks it to the right edge
+  // (hover slides it back out).
+  (function () {
+    var tag = document.getElementById('processTag');
+    var page = document.querySelector('.page');
+    var workflows = document.querySelector('.workflow-key h2');
+    if (!tag || !page || !workflows) return;
+
+    var NATURAL_TOP = 911;      // design px, where the tag sits on the page
+    var LINE = 2 / 3;           // share of the screen height
+
+    function update() {
+      var scale = window.pageScale || 1;
+      var line = window.innerHeight * LINE;
+      var naturalTop = page.getBoundingClientRect().top + NATURAL_TOP * scale;
+      var pinned = naturalTop <= line;
+      if (window.scrollY > 2) tag.classList.remove('is-away');   // first scroll down: slide in from the right
+      tag.classList.toggle('is-pinned', pinned);
+      tag.classList.toggle('is-tucked', pinned && workflows.getBoundingClientRect().top <= line);
+      tag.style.top = pinned ? (line / scale) + 'px' : '';
+    }
+
+    update();
+    tag.addEventListener('focus', function () { tag.classList.remove('is-away'); });
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('pagescale', update);
+  })();
 </script>
 </body>
 </html>

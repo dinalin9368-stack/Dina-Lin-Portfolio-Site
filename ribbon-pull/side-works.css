@@ -110,20 +110,80 @@ html, body {
 .text-crafts { top: 3662px; width: 630px; }
 .text-crafts .sw-desc { width: 579px; }
 
-.sw-arrow {
-  position: absolute;
-  display: block;
-  width: 24px;
-  height: 24px;
-  transform: rotate(-90deg);
-  cursor: pointer;
-  outline: none;
+/* Stickers: a little tilted, with a very light shadow and the bottom-right corner peeled up.
+   The face is cut along a 45 degree fold line; the flap is the cut-off corner (the same picture) mirrored across that line,
+   painted as the paper back with a soft shadow. --a is the length of the folded corner along each edge, and it
+   grows on hover so the corner lifts a bit more. */
+@property --a {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 20px;
 }
 
-.arrow-acs { left: 764px; top: 986px; }
-.arrow-photo { left: 514px; top: 2599px; }
+.sw-sticker {
+  position: absolute;
+  display: block;
+  width: var(--w);
+  height: var(--h);
+  transform: rotate(var(--tilt));
+  cursor: pointer;
+  outline: none;
+  transition: --a 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.14)) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.08));
+}
 
-/* the note beside each arrow appears while the arrow is hovered or focused. Its box starts at the arrow's right
+.sw-sticker:focus-visible { outline: 2px solid #000; outline-offset: 6px; border-radius: 12px; }
+
+.sticker-face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -webkit-user-drag: none;
+  clip-path: polygon(0 0, 100% 0, 100% calc(var(--h) - var(--a)), calc(var(--w) - var(--a)) 100%, 0 100%);
+}
+
+.sticker-curl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--w);
+  height: var(--h);
+  transform-origin: 0 0;
+  /* mirror across the line x + y = w + h - a */
+  transform: translate(calc(var(--w) + var(--h) - var(--a)), calc(var(--w) + var(--h) - var(--a))) scale(1, -1) rotate(90deg);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.sticker-curl span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ffffff 10%, #e1e1dc 100%);
+  -webkit-mask: var(--sticker) center / 100% 100% no-repeat;
+  mask: var(--sticker) center / 100% 100% no-repeat;
+  clip-path: polygon(100% 100%, 100% calc(100% - var(--a)), calc(100% - var(--a)) 100%);
+}
+
+/* about 25% bigger than before, still centred where the arrows were (998 and 2611) */
+.sticker-acs {
+  --w: 80px; --h: 80px; --a: 38px; --tilt: -8deg;
+  --sticker: url('assets/side-works/sticker-acs.png');
+  left: 764px; top: 958px;
+}
+.sticker-acs:hover, .sticker-acs:focus-visible { --a: 50px; }
+
+.sticker-photo {
+  --w: 80px; --h: 55.4px; --a: 17px; --tilt: 6deg;
+  --sticker: url('assets/side-works/sticker-camera.png');
+  left: 514px; top: 2583.3px;
+}
+.sticker-photo:hover, .sticker-photo:focus-visible { --a: 25px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-sticker { transition: none; }
+}
+
+/* the note beside each sticker appears while the sticker is hovered or focused. Its box starts at the sticker's right
    edge, so the cursor can cross over to it (and the Instagram link) without it disappearing */
 .sw-caption {
   position: absolute;
@@ -141,11 +201,11 @@ html, body {
   transition: opacity 0.25s ease, visibility 0s linear 0.25s;
 }
 
-.caption-acs { left: 788px; top: 986px; }
-.caption-photo { left: 538px; top: 2599px; }
+.caption-acs { left: 844px; top: 986px; }
+.caption-photo { left: 594px; top: 2599px; }
 
-.sw-arrow:hover + .sw-caption,
-.sw-arrow:focus-visible + .sw-caption,
+.sw-sticker:hover + .sw-caption,
+.sw-sticker:focus-visible + .sw-caption,
 .sw-caption:hover,
 .sw-caption:focus-within {
   opacity: 1;

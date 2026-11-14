@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="ribbon-pull/js/scale.js?v=1" data-mode="page"></script>
+<title>Alaska Digital ID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=10">
+<style>
+  :root {
+    --page-max: 1440px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: #000000;
+    font-family: 'Figtree', sans-serif;
+  }
+
+  .page {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    position: relative;
+    height: 4464px;
+    overflow-x: visible;
+    overflow-y: clip;
+  }
+
+  /* Title */
+  .kiosk-title {
+    position: absolute;
+    left: 118px;
+    top: 130px;
+    margin: 0;
+    font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
+    font-weight: 500;
+    font-size: 96px;
+    z-index: 2;
+  }
+
+  /* Background snowflake behind Overview / Workflows */
+  .bg-snowflake {
+    position: absolute;
+    left: 402.5px;
+    top: 730.75px;
+    width: 1390px;
+    height: 1390px;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Opening: hero image + CTA */
+  .hero-image {
+    position: absolute;
+    left: 118px;
+    top: 202px;
+    width: 1204px;
+    aspect-ratio: 2000 / 1106;
+    z-index: 1;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Process Doc. tag: sits in front of the bouquet. Once it has scrolled up past two thirds of the screen it
+     stays pinned at that height. When the Workflows section reaches it, it tucks to the right edge (only the tip
+     shows); hovering brings it back out. Before the first scroll it waits off the right edge and slides in. */
+  .process-tag {
+    position: absolute;
+    left: 1145.62px;
+    top: 911px;
+    width: 304.38px;
+    height: 65.4215px;
+    display: block;
+    line-height: 0;
+    z-index: 8;
+    transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .process-tag img {
+    display: block;
+    width: 304.38px;
+    height: 65.4215px;
+  }
+
+  .process-tag.is-pinned { position: fixed; }
+
+  .process-tag.is-away { transform: translateX(100%); }
+
+  .process-tag.is-tucked:not(:hover):not(:focus-visible) { transform: translateX(211.38px); }
+
+  .process-tag:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
+
+  /* Overview */
+  .overview {
+    position: absolute;
+    left: 118px;
+    top: 988px;
+    width: 592px;
+    z-index: 1;
+  }
+
+  .overview h2, .section-heading {
+    font-weight: 500;
+    font-size: 64px;
+    margin: 0 0 16px;
+  }
+
+  .overview p {
+    font-size: 24px;
+    margin: 0;
+    width: 583px;
+  }
+
+  /* Workflows: key + diagram */
+  .workflow-key {
+    position: absolute;
+    left: 118px;
+    top: 1290px;
+    width: 307px;
+    z-index: 1;
+  }
+
+  .workflow-key h2 { margin-bottom: 16px; }
+
+  .key-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+  }
+
+  .key-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    width: 58px;
+  }
+
+  .key-icons p {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .key-icon-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .key-icon-stack img { display: block; width: 58px; }
+
+  .key-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    width: 155px;
+    font-size: 14px;
+  }
+
+  .key-labels p { margin: 0; }
+
+  .key-labels .group { display: flex; flex-direction: column; gap: 41px; }
+  .key-labels .actions { display: flex; flex-direction: column; gap: 42px; }
+
+  .workflow-cards {
+    position: absolute;
+    left: calc(25% + 64px);
+    top: 1383px;
+    width: 871px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 26px;
+    z-index: 1;
+  }
+
+  .workflow-card-1 {
+    width: 100%;
+    height: 475px;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    border: 5px solid #000;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .workflow-card-1 > img.diagram {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: none;
+  }
+
+  /* Video lightbox (click-to-expand) — still used by the Final Prototype video below */
+  .wf-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .wf-lightbox.open { display: flex; }
+
+  .wf-lightbox-inner video {
+    max-width: calc(90vw / var(--page-scale, 1));
+    max-height: calc(85vh / var(--page-scale, 1));
+    display: block;
+    border-radius: 12px;
+  }
+
+  .wf-lightbox-inner .final-prototype-frame {
+    transform-origin: center center;
+  }
+
+  .wf-lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    padding: 10px;
+    line-height: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .wf-lightbox-close img { display: block; width: 48px; height: 48px; }
+
+  /* Style Guide */
+  .style-guide {
+    position: absolute;
+    left: 118px;
+    top: 1980px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .style-guide h2 { margin-bottom: 16px; }
+
+  .style-guide-frame {
+    aspect-ratio: 1916 / 1046;
+    width: 100%;
+    border: 5px solid #000;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .style-guide-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Wireframes */
+  .wireframes {
+    position: absolute;
+    left: 118px;
+    top: 2820px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .wireframes h2 { margin-bottom: 16px; }
+
+  .wireframes-frame {
+    border: 5px solid #000;
+    border-radius: 20px;
+    height: 666px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .wf-row {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+  }
+
+  .wf-row.row-1 {
+    padding: 12px 0;
+    animation: wf-scroll-left 12s linear infinite;
+  }
+
+  .wf-row img {
+    display: block;
+    height: 632px;
+    width: auto;
+    border: 1px solid #000;
+  }
+
+  .wf-row img.no-border { border: none; }
+
+  @keyframes wf-scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes wf-scroll-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  /* Final Prototype */
+  .final-prototype {
+    position: absolute;
+    left: 118px;
+    top: 3648px;
+    width: 1204px;
+    z-index: 0;
+  }
+
+  .final-prototype h2 { margin-bottom: 16px; }
+
+  /* iPhone mockup from Figma community file (node 31:128): a plain rounded-rect
+     screen container (clipped with border-radius, no masking needed) plus a
+     frame PNG on top whose screen cutout is already precisely pre-cut. */
+  .final-prototype-frame {
+    position: relative;
+    width: 100%;
+    height: 500px;
+  }
+
+  .fp-video-wrap {
+    position: absolute;
+    left: 13.02px;
+    top: 10.27px;
+    width: 221.45px;
+    height: 479.41px;
+    overflow: hidden;
+    border-radius: 18.85px;
+  }
+
+  .fp-video-wrap video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+  }
+
+  .phone-device-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 247.51px;
+    height: 500px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Back to top button */
+  .back-to-top-button {
+    position: absolute;
+    left: 696px;
+    bottom: 78px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .back-to-top-button.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top-button.visible:hover {
+    transform: translateY(-10px);
+  }
+
+  .back-to-top-button img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wf-row.row-1 { animation: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo-mark" href="ribbon-pull/index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
+  <ul class="nav-links">
+    <li><a href="ribbon-pull/home.html">Projects</a></li>
+    <li><a href="ribbon-pull/side-works.html">Side Works</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="kiosk-title">Alaska Digital ID</h1>
+
+  <img class="bg-snowflake" src="assets/alaska/bg-snowflake.png" alt="">
+
+  <div class="hero-image">
+    <img src="assets/alaska/hero.png" alt="Alaska Digital ID app screens">
+  </div>
+
+  <div class="overview">
+    <h2>Overview</h2>
+    <p>Completed over the span of 6 weeks, this project reimagines the driver’s license as a smartphone-based digital ID for the state of Alaska, with a full ID view and a quick age-verification view.</p>
+  </div>
+
+  <div class="workflow-key">
+    <h2 class="section-heading">Workflows</h2>
+    <div class="key-row">
+      <div class="key-icons">
+        <p>Key:</p>
+        <div class="key-icon-stack">
+          <img src="assets/kiosk/key-vector-1.svg?v=2" alt="">
+          <img src="assets/kiosk/key-user-decision.svg" alt="" style="width:30px">
+          <img src="assets/kiosk/key-user-action-3.svg?v=2" alt="">
+          <img src="assets/kiosk/key-options.svg?v=2" alt="">
+        </div>
+      </div>
+      <div class="key-labels">
+        <p>Workflow Start</p>
+        <div class="group">
+          <p>User Decision</p>
+          <div class="actions">
+            <p>User Action/Key Points</p>
+            <p>User Options</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow-cards" id="workflowCards">
+    <div class="workflow-card-1">
+      <img class="diagram" src="assets/alaska/workflow-diagram.png" alt="Alaska Digital ID app flow diagram">
+    </div>
+  </div>
+
+  <div class="wf-lightbox" id="wfLightbox">
+    <button class="wf-lightbox-close" id="wfLightboxClose" aria-label="Close">
+      <img src="assets/kiosk/lightbox-close-button.svg" alt="">
+    </button>
+    <div class="wf-lightbox-inner" id="wfLightboxInner"></div>
+  </div>
+
+  <div class="style-guide">
+    <h2 class="section-heading">Style Guide</h2>
+    <div class="style-guide-frame">
+      <img src="assets/alaska/style-guide.png" alt="Style guide">
+    </div>
+  </div>
+
+  <div class="wireframes">
+    <h2 class="section-heading">Wireframes</h2>
+    <div class="wireframes-frame">
+      <div class="wf-row row-1">
+        <img src="assets/alaska/wf-1.png" alt="">
+        <img src="assets/alaska/wf-2.png" alt="">
+        <img src="assets/alaska/wf-3.png" alt="">
+        <img src="assets/alaska/wf-4.png" alt="">
+        <img src="assets/alaska/wf-5.png" alt="">
+        <img src="assets/alaska/wf-1.png" alt="">
+        <img src="assets/alaska/wf-2.png" alt="">
+        <img src="assets/alaska/wf-3.png" alt="">
+        <img src="assets/alaska/wf-4.png" alt="">
+        <img src="assets/alaska/wf-5.png" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="final-prototype">
+    <h2 class="section-heading">Final Prototype</h2>
+    <div class="final-prototype-frame">
+      <div class="fp-video-wrap">
+        <video src="assets/alaska/final-prototype-video.mp4" muted loop autoplay playsinline preload="auto"></video>
+      </div>
+      <img class="phone-device-frame" src="assets/alaska/iphone-mockup-frame.png" alt="">
+    </div>
+  </div>
+
+  <button class="back-to-top-button" id="backToTopButton" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+    <img src="assets/kiosk/back-to-top-button.svg" alt="">
+  </button>
+</div>
+
+<script>
+  const button = document.getElementById('backToTopButton');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+  observer.observe(button);
+
+  const wfLightbox = document.getElementById('wfLightbox');
+  const wfLightboxInner = document.getElementById('wfLightboxInner');
+  const wfLightboxClose = document.getElementById('wfLightboxClose');
+  let wfLightboxOrigin = null;
+
+  function collapseWfVideo() {
+    const frameEl = wfLightboxInner.querySelector('.final-prototype-frame');
+    if (!frameEl || !wfLightboxOrigin) return;
+    frameEl.style.transform = '';
+    frameEl.style.width = '';
+    wfLightboxOrigin.appendChild(frameEl);
+    wfLightbox.classList.remove('open');
+    wfLightboxOrigin = null;
+  }
+
+  document.querySelectorAll('.final-prototype-frame video').forEach((video) => {
+    video.addEventListener('click', () => {
+      if (wfLightbox.classList.contains('open')) return;
+      const frameEl = video.closest('.final-prototype-frame');
+      const deviceImg = frameEl.querySelector('.phone-device-frame');
+      wfLightboxOrigin = frameEl.parentElement;
+      const imgRect = deviceImg.getBoundingClientRect();
+      const targetHeight = window.innerHeight * 0.85;
+      const scale = Math.min(2, targetHeight / imgRect.height);
+      frameEl.style.width = imgRect.width + 'px';
+      wfLightboxInner.appendChild(frameEl);
+      frameEl.style.transform = `scale(${scale})`;
+      wfLightbox.classList.add('open');
+      video.play().catch(() => {});
+    });
+  });
+
+  wfLightboxClose.addEventListener('click', collapseWfVideo);
+  wfLightbox.addEventListener('click', (e) => { if (e.target === wfLightbox) collapseWfVideo(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseWfVideo(); });
+
+  // Final Prototype phone: sized so the heading, full phone and the back-to-top
+  // button always fit the viewport with no scrolling, filling whatever vertical
+  // room is actually available (never upscaled past the mockup's native size).
+  (function () {
+    const DESIGN = {
+      navH: 124, headingH: 77, headingMB: 16,
+      gap: 97, btnH: 48, endGap: 78,
+      baseW: 420.192, baseH: 849.038,
+      sectionTop: 3648, sectionWidth: 1204,
+    };
+    const frame = document.querySelector('.final-prototype-frame');
+    const videoWrap = document.querySelector('.fp-video-wrap');
+    const deviceImg = document.querySelector('.phone-device-frame');
+    const btn = document.getElementById('backToTopButton');
+    const page = document.querySelector('.page');
+
+    function layout() {
+      const scale = window.pageScale || (document.documentElement.clientWidth / 1440);
+      // Only the heading + phone are guaranteed scroll-free; the back-to-top
+      // button (secondary) may sit just below the fold on shorter windows.
+      const availableVisual = window.innerHeight - DESIGN.navH * scale;
+      const availableDesign = availableVisual / scale - DESIGN.headingH - DESIGN.headingMB - 8;
+      const s = Math.min(1, Math.max(0.25, availableDesign / DESIGN.baseH));
+
+      const frameH = DESIGN.baseH * s;
+      const frameW = DESIGN.baseW * s;
+      const phoneLeft = (DESIGN.sectionWidth - frameW) / 2;
+
+      frame.style.height = frameH + 'px';
+      deviceImg.style.left = phoneLeft + 'px';
+      deviceImg.style.width = frameW + 'px';
+      deviceImg.style.height = frameH + 'px';
+      videoWrap.style.left = (phoneLeft + 22.1 * s) + 'px';
+      videoWrap.style.top = (17.44 * s) + 'px';
+      videoWrap.style.width = (376 * s) + 'px';
+      videoWrap.style.height = (814 * s) + 'px';
+      videoWrap.style.borderRadius = (32 * s) + 'px';
+
+      const frameTopAbs = DESIGN.sectionTop + DESIGN.headingH + DESIGN.headingMB;
+      const btnTopAbs = frameTopAbs + frameH + DESIGN.gap;
+      btn.style.top = btnTopAbs + 'px';
+      btn.style.bottom = 'auto';
+      page.style.height = (btnTopAbs + DESIGN.btnH + DESIGN.endGap) + 'px';
+    }
+
+    layout();
+    window.addEventListener('pagescale', layout);
+    window.addEventListener('resize', layout);
+    window.addEventListener('load', layout);
+  })();
+</script>
+<script>
+  // Process Doc. tag: in its place on the page until it has scrolled up past two thirds of the screen; after that it
+  // stays pinned at that height, and once the Workflows heading reaches it, CSS tucks it to the right edge
+  // (hover slides it back out).
+  (function () {
+    var tag = document.getElementById('processTag');
+    var page = document.querySelector('.page');
+    var workflows = document.querySelector('.workflow-key h2');
+    if (!tag || !page || !workflows) return;
+
+    var NATURAL_TOP = 911;      // design px, where the tag sits on the page
+    var LINE = 2 / 3;           // share of the screen height
+
+    function update() {
+      var scale = window.pageScale || 1;
+      var line = window.innerHeight * LINE;
+      var naturalTop = page.getBoundingClientRect().top + NATURAL_TOP * scale;
+      var pinned = naturalTop <= line;
+      if (window.scrollY > 2) tag.classList.remove('is-away');   // first scroll down: slide in from the right
+      tag.classList.toggle('is-pinned', pinned);
+      tag.classList.toggle('is-tucked', pinned && workflows.getBoundingClientRect().top <= line);
+      tag.style.top = pinned ? (line / scale) + 'px' : '';
+    }
+
+    update();
+    tag.addEventListener('focus', function () { tag.classList.remove('is-away'); });
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('pagescale', update);
+  })();
+</script>
+</body>
+</html>

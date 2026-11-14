@@ -11,7 +11,7 @@ html, body {
 .home {
   position: relative;
   width: 1440px;
-  height: 4242px;
+  height: 3650px;
   margin: 0 auto;
   overflow-x: visible;
   overflow-y: clip;
@@ -37,88 +37,16 @@ html, body {
 
 .deco-bow3 { left: 368px; top: 2503px; width: 1520px; height: 996px; }
 
-/* hero */
+/* hero — an invisible anchor only, so the scroll-triggered ribbons below still
+   know where the hero area ends (see ribbons.js). The name itself is the
+   .intro-name/.intro-role block just below it. */
 .hero-panel {
   position: absolute;
   left: 118px;
   top: 202px;
   width: 1204px;
-  height: 704px;
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
+  height: 650px;
 }
-
-.hero-panel-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-video-controls {
-  position: absolute;
-  left: 24px;
-  bottom: 24px;
-  display: flex;
-  gap: 10px;
-  z-index: 2;
-}
-
-.hero-video-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  padding: 0;
-}
-
-.hero-video-btn:hover {
-  background: rgba(0, 0, 0, 0.55);
-}
-
-.hero-video-btn svg { display: none; }
-
-#heroPlayBtn .icon-pause,
-#heroMuteBtn .icon-unmuted {
-  display: block;
-}
-
-#heroPlayBtn.is-paused .icon-pause,
-#heroMuteBtn.is-muted .icon-unmuted {
-  display: none;
-}
-
-#heroPlayBtn.is-paused .icon-play,
-#heroMuteBtn.is-muted .icon-muted {
-  display: block;
-}
-
-.hero-text {
-  position: absolute;
-  left: 118px;
-  margin: 0;
-  font-family: 'Figtree', sans-serif;
-  font-weight: 700;
-  font-size: 350px;
-  line-height: 1;
-  white-space: nowrap;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.hero-text.line-1 { top: 134px; }
-.hero-text.line-2 { left: 475px; top: 589px; }
-
-.hero-text .accent { color: #75a08b; }
 
 /* projects heading */
 .projects-heading {
@@ -126,8 +54,8 @@ html, body {
   left: 128px;
   top: 1063px;
   margin: 0;
-  font-family: 'Figtree', sans-serif;
-  font-weight: 700;
+  font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
+  font-weight: 500;
   font-size: 96px;
 }
 
@@ -197,8 +125,8 @@ a.circle {
 .project-title {
   position: absolute;
   margin: 0;
-  font-family: 'Figtree', sans-serif;
-  font-weight: 500;
+  font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
+  font-weight: 400;
   font-size: 64px;
   line-height: 1.05;
 }
@@ -232,8 +160,9 @@ a.circle {
 .text-alaska .project-desc { height: 117px; }
 .text-homealone .project-desc { height: 91px; }
 
-/* project buttons */
+/* project buttons: a solid outline; on hover the black fill wipes in from the left edge to the right edge */
 .project-btn {
+  position: relative;
   display: inline-flex;
   flex: none;
   align-self: flex-end;
@@ -242,62 +171,27 @@ a.circle {
   width: 196px;
   height: 67px;
   padding: 19px 32px;
-  border: 2px solid transparent;
+  border: 2px solid #000;
   border-radius: 10px;
+  background: linear-gradient(#000, #000) left center / 0% 100% no-repeat;
   font-family: 'Figtree', sans-serif;
   font-weight: 400;
   font-size: 24px;
   color: #000;
   text-decoration: none;
   white-space: nowrap;
+  transition: background-size 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a.project-btn { cursor: pointer; }
 
-/* the dashed outline and the solid trace are the same SVG shape, so the solid line fully covers the dashes;
-   on hover the solid line traces around the button, and traces back on leave */
-.project-btn {
-  position: relative;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-/* pressed: black fill, white text */
-.project-btn:active {
-  background-color: #000;
+.project-btn:hover,
+.project-btn:focus-visible {
+  background-size: 100% 100%;
   color: #fff;
 }
 
-.btn-trace {
-  position: absolute;
-  left: -2px;
-  top: -2px;
-  width: 196px;
-  height: 67px;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.btn-trace rect {
-  fill: none;
-  stroke: #000;
-  stroke-width: 2;
-}
-
-.btn-trace .btn-dash { stroke-dasharray: 4 4; }
-
-.btn-trace .btn-solid {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 0.5s ease;
-}
-
-.project-btn:hover .btn-solid,
-.project-btn:focus-visible .btn-solid {
-  stroke-dashoffset: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .btn-trace .btn-solid { transition: none; }
   .project-btn { transition: none; }
 }
 
@@ -307,7 +201,7 @@ a.project-btn { cursor: pointer; }
 .back-to-top {
   position: absolute;
   left: 50%;
-  top: 4116px;
+  top: 3524px;
   width: 48px;
   height: 48px;
   transform: translateX(-50%) translateY(16px);
@@ -330,24 +224,25 @@ a.project-btn { cursor: pointer; }
   transform: translateX(-50%) translateY(-10px);
 }
 
-/* closing intro */
+/* closing intro — matches Figma node 260:5 (Dina / Interaction Designer / Lin) */
 .intro-name {
   position: absolute;
   margin: 0;
   font-family: 'Figtree', sans-serif;
   font-weight: 700;
-  font-size: 300px;
+  font-size: 350px;
   line-height: 1;
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
   white-space: nowrap;
 }
 
 .intro-name .accent { color: #75a08b; }
 
-.intro-dina { left: 118px; top: 3495px; }
-.intro-lin { left: 911px; top: 3783px; }
+.intro-dina { left: 118px; top: 202px; }
+.intro-lin { left: 843px; top: 480px; }
 
-.intro-role,
-.intro-tagline {
+.intro-role {
   position: absolute;
   margin: 0;
   font-family: 'Figtree', sans-serif;
@@ -355,17 +250,7 @@ a.project-btn { cursor: pointer; }
   font-size: 48px;
   line-height: normal;
   white-space: nowrap;
+  left: 881px;
+  top: 389px;
 }
 
-.intro-role { left: 810px; top: 3704px; }
-.intro-tagline { left: 141px; top: 3828px; }
-
-/* wave text: the letters are moved by js/wave-text.js as the cursor moves along the word */
-.wave-word,
-.wave-letter { display: inline-block; }
-
-.wave-letter { transition: transform 0.22s ease-out; }
-
-@media (prefers-reduced-motion: reduce) {
-  .wave-letter { transition: none; }
-}
