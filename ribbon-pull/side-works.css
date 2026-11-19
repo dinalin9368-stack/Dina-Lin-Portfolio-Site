@@ -11,7 +11,7 @@ html, body {
 .sw-page {
   position: relative;
   width: 1440px;
-  height: 5459px;
+  height: 5209px;
   margin: 0 auto;
   overflow: clip;
 }
@@ -54,7 +54,7 @@ html, body {
 .flyers {
   position: absolute;
   left: 118px;
-  top: 390px;
+  top: 1499px;
   width: 1204px;
   height: 550px;
 }
@@ -101,13 +101,13 @@ html, body {
   font-style: italic;
 }
 
-.text-acs { top: 960px; width: 630px; }
+.text-acs { top: 2069px; width: 630px; }
 .text-acs .sw-desc { width: 630px; height: 119px; }
 
-.text-photo { top: 2567px; width: 551px; }
+.text-photo { top: 3713px; width: 551px; }
 .text-photo .sw-desc { width: 579px; height: 119px; }
 
-.text-crafts { top: 3662px; width: 630px; }
+.text-crafts { top: 4809px; width: 630px; }
 .text-crafts .sw-desc { width: 579px; }
 
 /* Stickers: a little tilted, with a very light shadow and the bottom-right corner peeled up.
@@ -168,14 +168,14 @@ html, body {
 .sticker-acs {
   --w: 80px; --h: 80px; --a: 38px; --tilt: -8deg;
   --sticker: url('assets/side-works/sticker-acs.png');
-  left: 764px; top: 958px;
+  left: 764px; top: 2067px;
 }
 .sticker-acs:hover, .sticker-acs:focus-visible { --a: 50px; }
 
 .sticker-photo {
   --w: 80px; --h: 55.4px; --a: 17px; --tilt: 6deg;
   --sticker: url('assets/side-works/sticker-camera.png');
-  left: 514px; top: 2583.3px;
+  left: 514px; top: 3729.3px;
 }
 .sticker-photo:hover, .sticker-photo:focus-visible { --a: 25px; }
 
@@ -201,8 +201,8 @@ html, body {
   transition: opacity 0.25s ease, visibility 0s linear 0.25s;
 }
 
-.caption-acs { left: 844px; top: 986px; }
-.caption-photo { left: 594px; top: 2599px; }
+.caption-acs { left: 844px; top: 2095px; }
+.caption-photo { left: 594px; top: 3745px; }
 
 .sw-sticker:hover + .sw-caption,
 .sw-sticker:focus-visible + .sw-caption,
@@ -235,7 +235,7 @@ html, body {
 .photo-grid {
   position: absolute;
   left: 118px;
-  top: 1226px;
+  top: 2372px;
   width: 1204px;
   height: 1321px;
   overflow-x: hidden;
@@ -265,7 +265,7 @@ html, body {
 .crafts-grid {
   position: absolute;
   left: 118px;
-  top: 2869px;
+  top: 4016px;
   width: 1204px;
   height: 768px;
   overflow: clip;
@@ -323,11 +323,225 @@ html, body {
 .craft-title span { display: block; }
 .craft-tools { font-size: 14px; }
 
+/* Side Projects: a flashcard-style card (Figma node 277:346, backed by 277:345) that flips on
+   click, Quizlet-style. The backing card is rotated 94.47deg against the front's 90deg base
+   rotation (a 4.47deg relative tilt) -- its rotated bounding box is wider than the front card,
+   so the whole stack is scaled down (0.9447x) to keep that bounding box within the standard
+   118px page margins, matching Figma's own wrapper size (1262.951x894.442) proportionally. */
+.text-side-projects { top: 1232px; width: 630px; }
+.text-side-projects .sw-desc { width: 760px; }
+
+.side-projects-card {
+  position: absolute;
+  left: 151.5px;
+  top: 390px;
+  width: 1137px;
+  height: 759px;
+  perspective: 1800px;
+  cursor: pointer;
+}
+
+.side-projects-card:focus-visible { outline: none; }
+
+.side-projects-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.side-projects-nav img {
+  position: absolute;
+  inset: -4.17%;
+  display: block;
+  width: 108.34%;
+  height: 108.34%;
+  max-width: none;
+}
+
+.side-projects-nav-prev { left: 16px; transform: translateY(-50%); }
+.side-projects-nav-next { right: 16px; transform: translateY(-50%); }
+
+.side-projects-nav-prev img { transform: rotate(-90deg); }
+.side-projects-nav-next img { transform: rotate(90deg); }
+
+.side-projects-nav-prev:hover { transform: translateY(-50%) translateX(-10px); }
+.side-projects-nav-next:hover { transform: translateY(-50%) translateX(10px); }
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.side-projects-card.flipped .flip-card-inner { transform: rotateY(-180deg); }
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #fcfcfc;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  display: flex;
+}
+
+/* Postcard layout: a message side on the left, a divider, and an address side on the
+   right (stamp box + ruled lines), like the back of an actual postcard. */
+.postcard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 50px 60px;
+  gap: 50px;
+}
+
+.postcard-message {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.postcard-title {
+  margin: 0 0 26px;
+  font-size: 30px;
+  font-weight: 600;
+  color: #000;
+}
+
+.postcard-tools-label {
+  margin: 36px 0 22px;
+  font-size: 23px;
+  font-weight: 500;
+  color: #000;
+}
+
+.postcard-tools {
+  display: flex;
+  gap: 32px;
+}
+
+.postcard-tool {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #777;
+}
+
+.postcard-tool-icon { width: 26px; height: 26px; flex: none; display: block; border-radius: 6px; }
+
+.rp-back-placeholder {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.6;
+  color: #444;
+  font-style: italic;
+}
+
+.postcard-divider {
+  flex: none;
+  width: 1px;
+  background: #d8d8d8;
+}
+
+.postcard-address {
+  flex: none;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 10px;
+}
+
+.postcard-stamp {
+  flex: none;
+  display: block;
+  width: 76px;
+  height: 96px;
+  object-fit: cover;
+}
+
+/* Writes the note directly on ruled lines: a repeating gradient draws a rule
+   under every wrapped line of text, the way the blank lines used to look. */
+.postcard-note {
+  width: 100%;
+  margin: 32px 0 0;
+  padding-bottom: 6px;
+  font-size: 18px;
+  font-style: italic;
+  color: #444;
+  text-align: left;
+  line-height: 40px;
+  background-image: linear-gradient(to bottom, transparent calc(100% - 1px), #d8d8d8 calc(100% - 1px));
+  background-size: 100% 40px;
+  background-repeat: repeat-y;
+}
+
+.rp-video-wrap {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 0.5px);
+  width: 950px;
+  height: 534px;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+/* Masks a thin border baked into a source clip's own pixels (not added by this
+   page) with the card's own background color, so it reads as a clean edge.
+   Needs to be an absolutely-positioned overlay, not a box-shadow -- a plain
+   box-shadow paints behind the (opaque, same-size) video and would be hidden. */
+.rp-video-wrap.mask-edges::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 4px solid #fcfcfc;
+  pointer-events: none;
+}
+
+.rp-video-wrap video,
+.rp-video-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.rp-date-wrap {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}
+
+.rp-date {
+  margin: 0;
+  font-size: 24px;
+  white-space: nowrap;
+}
+
 /* back to top */
 .back-to-top {
   position: absolute;
   left: 50%;
-  top: 5333px;
+  top: 5083px;
   width: 48px;
   height: 48px;
   transform: translateX(-50%) translateY(16px);

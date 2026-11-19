@@ -6,9 +6,9 @@
 <script src="js/scale.js?v=1" data-mode="page"></script>
 <title>Side Works</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="nav.css?v=10">
-<link rel="stylesheet" href="side-works.css?v=16">
+<link rel="stylesheet" href="side-works.css?v=25">
 </head>
 <body>
 <nav class="nav">
@@ -23,6 +23,41 @@
 
 <main class="page sw-page">
   <h1 class="sw-title">My Other &ldquo;Projects&rdquo;</h1>
+
+  <div class="side-projects-card" id="redPandaCard" tabindex="0" role="button" aria-pressed="false">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <div class="rp-video-wrap"></div>
+        <div class="rp-date-wrap"><p class="rp-date"></p></div>
+      </div>
+      <div class="flip-card-back">
+        <div class="postcard">
+          <div class="postcard-message">
+            <h3 class="postcard-title"></h3>
+            <p class="rp-back-placeholder"></p>
+            <p class="postcard-tools-label">Tools</p>
+            <div class="postcard-tools"></div>
+          </div>
+          <div class="postcard-divider"></div>
+          <div class="postcard-address">
+            <img class="postcard-stamp" alt="A postage-stamp-style illustration from the project">
+            <p class="postcard-note"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="side-projects-nav side-projects-nav-prev" aria-label="Previous project">
+      <img src="assets/home/back-to-top.svg" alt="">
+    </button>
+    <button type="button" class="side-projects-nav side-projects-nav-next" aria-label="Next project">
+      <img src="assets/home/back-to-top.svg" alt="">
+    </button>
+  </div>
+
+  <div class="sw-text text-side-projects">
+    <h2 class="sw-subtitle">Side Projects</h2>
+    <p class="sw-desc">A collection of coursework from earlier on showing progress I made along the way.</p>
+  </div>
 
   <div class="flyers marquee" data-marquee data-speed="50" tabindex="0" role="region" aria-label="Asian Culture Society flyers">
     <div class="marquee-track">
@@ -121,6 +156,12 @@
           <h3 class="craft-title" style="left:376px;top:147px"><span>Samoyed</span><span>Pouch</span></h3>
           <p class="craft-tools" style="left:458px;top:336px">Crochet, Yarn</p>
         </article>
+        <article class="craft" style="background:#fee4ab">
+          <div class="craft-img" style="left:50px;top:50px;width:290px;height:270px"><img src="assets/side-works/craft-sky-mantas.jpg" alt="Sky Mantas" style="height:100.66%;left:-22.66%;top:-0.33%;width:139.8%"></div>
+          <div class="craft-panel" style="left:340px;top:50px;width:204px;height:270px"></div>
+          <h3 class="craft-title" style="left:380px;top:147px"><span>Sky</span><span>Mantas</span></h3>
+          <p class="craft-tools" style="left:458px;top:336px">Crochet, Yarn</p>
+        </article>
       </div>
     </div>
     <div class="craft-row marquee" data-marquee data-speed="65" data-start="896" style="top:393px" tabindex="0" role="region" aria-label="Crafts, second row">
@@ -178,5 +219,257 @@
 <script src="js/back-to-top.js?v=1"></script>
 <script src="js/flyer-marquee.js?v=5"></script>
 <script src="js/lightbox.js?v=2"></script>
+<script>
+  // Side Projects card: clicking the card flips it between its front and the
+  // postcard back for whichever project is currently loaded. The arrow buttons
+  // step to the previous/next project and reset to that project's front.
+  (function () {
+    var sideProjectCards = [
+      {
+        title: 'Chew, Chew, Red Panda',
+        date: 'Oct. 2026',
+        media: { type: 'video', src: 'assets/side-works/red-panda-book.mp4', aspect: 1920 / 1080 },
+        message: 'A children’s book I wrote and illustrated for PSYC 300: Animal Minds, about a red panda who is a picky eater. Targeting towards children from 3-5 years old using simple language and pictures to make reading easier and fun.',
+        tools: [
+          { icon: 'assets/side-works/icon-procreate.png', label: 'Procreate' },
+          { icon: 'assets/side-works/icon-paper.png', label: 'Paper' },
+        ],
+        stamp: 'assets/side-works/postcard-stamp.png',
+        note: 'Writing a children’s book is harder than I thought.',
+      },
+      {
+        title: 'Graceful',
+        date: 'Mar. 2024',
+        media: { type: 'image', src: 'assets/side-works/graceful.gif', aspect: 1920 / 1200 },
+        message: 'A motion typography piece for NMDE Digital Survey II’s Expressive Type project, where we picked a word and had to express its meaning entirely through type, texture, color, and motion. I chose “Graceful,” using flowing, looping ribbon shapes to echo the movement of a dancer, layered over a soft feather texture to keep the whole piece feeling light and airy.',
+        tools: [
+          { icon: 'assets/side-works/icon-photoshop.png', label: 'Photoshop' },
+        ],
+        stamp: 'assets/side-works/graceful-stamp.png?v=2',
+        note: 'Ribbons were harder to animate smoothly than expected.',
+      },
+      {
+        title: 'Clean Reserve: Rain',
+        date: 'Sep. 2024',
+        media: { type: 'image', src: 'assets/side-works/clean-reserve-rain.jpg', aspect: 1920 / 1080 },
+        message: 'A photorealistic 3D render and advertisement for the Found Objects project, where we modeled, textured, and lit an everyday object, then designed an ad around it. I modeled the real Sephora fragrance “Clean Reserve: Rain” and built the whole mood around its scent story, the feeling of walking in the woods after a passing rain.',
+        tools: [
+          { icon: 'assets/side-works/icon-cinema4d.png', label: 'Cinema 4D' },
+          { icon: 'assets/side-works/icon-illustrator.png', label: 'Illustrator' },
+        ],
+        stamp: 'assets/side-works/clean-reserve-stamp.png',
+        note: 'The lighting and shadows were critical to create the mood.',
+      },
+      {
+        title: 'Isometric Island',
+        date: 'Nov. 2024',
+        media: { type: 'image', src: 'assets/side-works/isometric-island.jpg?v=2', aspect: 1 },
+        message: 'A low-poly 3D environment for the “Cute Little…” project, where the whole scene had to fit inside a single cube. I went with “Cute Little Iceberg,” modeling and texturing the scene in Cinema 4D and sculpting the penguin in ZBrush before bringing it back in to light and render.',
+        tools: [
+          { icon: 'assets/side-works/icon-cinema4d.png', label: 'Cinema 4D' },
+          { icon: 'assets/side-works/icon-zbrush.png', label: 'ZBrush' },
+        ],
+        stamp: 'assets/side-works/isometric-island-stamp.png?v=2',
+        note: 'Choosing the right materials is important for cohesive style.',
+      },
+      {
+        title: 'Logo Animations',
+        date: 'Sep. 2025',
+        media: {
+          type: 'video-sequence',
+          srcs: [
+            'assets/side-works/beats-logo.mp4',
+            'assets/side-works/ibm-logo.mp4',
+            'assets/side-works/lg-logo.mp4',
+          ],
+          aspect: 1920 / 1080,
+          // The LG clip has a faint border baked into its own exported pixels;
+          // mask it with the card's background color so it reads as a clean edge.
+          maskEdges: true,
+        },
+        message: 'Three 5-second logo animations for a Motion Design assignment on bringing a brand’s identity to life through motion. For each one I moved from a more abstract form into the concrete logo, and from fast, dynamic motion into a slower resolve, animating Beats, IBM, and LG.',
+        tools: [
+          { icon: 'assets/side-works/icon-aftereffects.png', label: 'After Effects' },
+          { icon: 'assets/side-works/icon-illustrator.png', label: 'Illustrator' },
+        ],
+        stamp: 'assets/side-works/logo-animations-stamp.png?v=2',
+        note: 'Timing the abstract-to-concrete shift was the real challenge.',
+      },
+      {
+        title: 'Animated Personal Mandala',
+        date: 'Feb. 2025',
+        media: { type: 'video', src: 'assets/side-works/mandala.mp4', aspect: 1920 / 1080 },
+        message: 'A 30-second animated mandala for New Media Design Animation, built entirely from keywords describing myself and expressed through radial shape, color, and pattern. The project was also a chance to practice core animation principles, like ease-in, ease-out, timing, and pacing, in After Effects.',
+        tools: [
+          { icon: 'assets/side-works/icon-aftereffects.png', label: 'After Effects' },
+          { icon: 'assets/side-works/icon-illustrator.png', label: 'Illustrator' },
+        ],
+        stamp: 'assets/side-works/mandala-stamp.png?v=2',
+        note: 'I love my color palette for this project.',
+      },
+      {
+        title: 'Fukushima Wastewater Release',
+        date: 'Apr. 2024',
+        media: { type: 'image', src: 'assets/side-works/fukushima-historic-event.jpg', aspect: 1920 / 1243 },
+        message: 'A poster for NMDE Digital Survey II’s Visualizing a Historic Event project, communicating a chosen event through image and type alone. I chose Japan’s 2023 release of treated Fukushima wastewater into the ocean, staging it as a dinner table: a radioactive fish served on a plate, a map of the spreading water, and the date printed right on the chopsticks.',
+        tools: [
+          { icon: 'assets/side-works/icon-illustrator.png', label: 'Illustrator' },
+        ],
+        stamp: 'assets/side-works/fukushima-stamp.png',
+        note: 'It was printed as a physical poster.',
+      },
+      {
+        title: 'Pebbles the Penguin',
+        date: 'Apr. 2025',
+        media: {
+          type: 'video', src: 'assets/side-works/tamagotchi.mp4',
+          aspect: 936 / 1304,
+          // Exact crop rectangle + corner radius the user drew in Figma over a
+          // native-resolution (956x1326) frame of this video.
+          crop: { nativeW: 956, nativeH: 1326, x: 9, y: 12, w: 936, h: 1284, cornerRadius: 80 },
+        },
+        message: 'My own Tamagotchi: a virtual pet with a storyline and a fully designed case. Pebbles starts as an egg on a rocky nest and hatches into a penguin you raise through the device’s own buttons, with the case itself designed to feel like a real handheld toy.',
+        tools: [
+          { icon: 'assets/side-works/icon-spline.png', label: 'Spline' },
+          { icon: 'assets/side-works/icon-procreate.png', label: 'Procreate' },
+          { icon: 'assets/side-works/icon-figma.png', label: 'Figma' },
+        ],
+        stamp: 'assets/side-works/tamagotchi-stamp.png?v=2',
+        note: 'This was a whimsical project to create.',
+      },
+    ];
+
+    var card = document.getElementById('redPandaCard');
+    if (!card) return;
+
+    var videoWrap = card.querySelector('.rp-video-wrap');
+    var dateEl = card.querySelector('.rp-date');
+    var titleEl = card.querySelector('.postcard-title');
+    var messageEl = card.querySelector('.rp-back-placeholder');
+    var toolsEl = card.querySelector('.postcard-tools');
+    var stampEl = card.querySelector('.postcard-stamp');
+    var noteEl = card.querySelector('.postcard-note');
+
+    var currentIndex = 0;
+    // Built once per project and reused on every visit, instead of being recreated
+    // on each render -- recreating <video>/<img> elements repeatedly as you click
+    // through projects eventually exhausts the browser's media decode resources
+    // and the video stops loading.
+    var mediaElements = [];
+
+    function getMediaElement(index) {
+      if (mediaElements[index]) return mediaElements[index];
+      var data = sideProjectCards[index];
+      var el;
+      if (data.media.type === 'video') {
+        el = document.createElement('video');
+        el.autoplay = true; el.loop = true; el.muted = true; el.playsInline = true;
+        el.src = data.media.src;
+      } else if (data.media.type === 'video-sequence') {
+        // Plays each clip in srcs once in order, then loops back to the first --
+        // used when one project is actually several short videos (e.g. several
+        // logo animations) shown on a single card.
+        el = document.createElement('video');
+        el.autoplay = true; el.muted = true; el.playsInline = true;
+        var seqIndex = 0;
+        el.src = data.media.srcs[seqIndex];
+        el.addEventListener('ended', function () {
+          seqIndex = (seqIndex + 1) % data.media.srcs.length;
+          el.src = data.media.srcs[seqIndex];
+          el.play().catch(function () {});
+        });
+      } else {
+        el = document.createElement('img');
+        el.src = data.media.src;
+        el.alt = data.title;
+      }
+      mediaElements[index] = el;
+      return el;
+    }
+
+    function renderCard(index) {
+      var data = sideProjectCards[index];
+      card.setAttribute('aria-label', data.title + ' — flip for project details');
+      videoWrap.innerHTML = '';
+      // Fit the wrap to each project's real media aspect within a max box, so
+      // nothing is cropped -- a wide video uses the full width, a square or tall
+      // image is capped on height instead so it doesn't spill past the card.
+      var maxW = 950, maxH = 620;
+      var wrapW = maxW, wrapH = maxW / data.media.aspect;
+      if (wrapH > maxH) { wrapH = maxH; wrapW = maxH * data.media.aspect; }
+      videoWrap.style.width = wrapW + 'px';
+      videoWrap.style.height = wrapH + 'px';
+      videoWrap.classList.toggle('mask-edges', !!data.media.maskEdges);
+      var mediaEl = getMediaElement(index);
+      videoWrap.appendChild(mediaEl);
+      if (data.media.crop) {
+        // Crops to an exact rectangle (drawn in Figma over a native-resolution
+        // frame of the media) and rounds it to that same rectangle's corner
+        // radius, by scaling the whole media up and shifting it so the crop
+        // rect's top-left lands at the wrap's origin; the wrap's overflow:hidden
+        // clips everything outside it.
+        var crop = data.media.crop;
+        var scale = wrapW / crop.w;
+        videoWrap.style.borderRadius = Math.round(crop.cornerRadius * scale) + 'px';
+        mediaEl.style.position = 'absolute';
+        mediaEl.style.left = Math.round(-crop.x * scale) + 'px';
+        mediaEl.style.top = Math.round(-crop.y * scale) + 'px';
+        mediaEl.style.width = Math.round(crop.nativeW * scale) + 'px';
+        mediaEl.style.height = Math.round(crop.nativeH * scale) + 'px';
+      } else {
+        videoWrap.style.borderRadius = '';
+        mediaEl.style.position = '';
+        mediaEl.style.left = '';
+        mediaEl.style.top = '';
+        mediaEl.style.width = '';
+        mediaEl.style.height = '';
+      }
+      if (mediaEl.tagName === 'VIDEO') {
+        mediaEl.play().catch(function () {});
+      }
+      dateEl.textContent = data.date;
+      titleEl.textContent = data.title;
+      messageEl.textContent = data.message;
+      stampEl.src = data.stamp;
+      toolsEl.innerHTML = '';
+      data.tools.forEach(function (tool) {
+        var item = document.createElement('span');
+        item.className = 'postcard-tool';
+        var img = document.createElement('img');
+        img.src = tool.icon;
+        img.alt = '';
+        img.className = 'postcard-tool-icon';
+        item.appendChild(img);
+        item.appendChild(document.createTextNode(tool.label));
+        toolsEl.appendChild(item);
+      });
+      noteEl.textContent = data.note;
+    }
+
+    function toggleFlip() {
+      var flipped = card.classList.contains('flipped');
+      card.classList.toggle('flipped', !flipped);
+      card.setAttribute('aria-pressed', String(!flipped));
+    }
+
+    function goToProject(index) {
+      currentIndex = (index + sideProjectCards.length) % sideProjectCards.length;
+      renderCard(currentIndex);
+      card.classList.remove('flipped');
+      card.setAttribute('aria-pressed', 'false');
+    }
+
+    renderCard(currentIndex);
+    card.addEventListener('click', toggleFlip);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFlip(); }
+    });
+
+    var prevBtn = card.querySelector('.side-projects-nav-prev');
+    var nextBtn = card.querySelector('.side-projects-nav-next');
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); goToProject(currentIndex - 1); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); goToProject(currentIndex + 1); });
+  })();
+</script>
 </body>
 </html>

@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="ribbon-pull/js/scale.js?v=1" data-mode="page"></script>
+<title>Title Sequence Recreation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Average&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=10">
+<style>
+  :root {
+    --page-max: 1440px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: #000000;
+    font-family: 'Figtree', sans-serif;
+  }
+
+  .page {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    position: relative;
+    height: 6209px;
+    overflow-x: visible;
+    overflow-y: clip;
+  }
+
+  /* Title */
+  .kiosk-title {
+    position: absolute;
+    left: 118px;
+    top: 130px;
+    margin: 0;
+    font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
+    font-weight: 500;
+    font-size: 96px;
+    z-index: 2;
+  }
+
+  /* Background wreath behind Overview / Storyboard */
+  .bg-wreath {
+    position: absolute;
+    left: 570px;
+    top: 1036px;
+    width: 1108px;
+    height: 1280px;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Opening: hero image + CTA */
+  .hero-image {
+    position: absolute;
+    left: 118px;
+    top: 202px;
+    width: 1204px;
+    aspect-ratio: 3840 / 2160;
+    overflow: hidden;
+    background: #fff;
+    z-index: 1;
+  }
+
+  .hero-collage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1700px;
+    height: 1000px;
+    transform: translate(-50%, -50%) rotate(-15deg);
+  }
+
+  .hero-card {
+    position: absolute;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .hero-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-card-center {
+    left: 500px;
+    top: 303.15px;
+    width: 700px;
+    height: 393.75px;
+    z-index: 5;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 50px 100px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero-card-r0c0 { left: -224px; top: -114.6px;  width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r0c1 { left: 500px;  top: -114.6px;  width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r0c2 { left: 1224px; top: -114.6px;  width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r1c0 { left: -224px; top: 303.15px;  width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r1c2 { left: 1224px; top: 303.15px;  width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r2c0 { left: -224px; top: 720.9px;   width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r2c1 { left: 500px;  top: 720.9px;   width: 700px; height: 393.75px; z-index: 2; }
+  .hero-card-r2c2 { left: 1224px; top: 720.9px;   width: 700px; height: 393.75px; z-index: 2; }
+
+  /* Overview */
+  .overview {
+    position: absolute;
+    left: 118px;
+    top: 988px;
+    width: 592px;
+    z-index: 1;
+  }
+
+  .overview h2, .section-heading {
+    font-weight: 500;
+    font-size: 64px;
+    margin: 0 0 16px;
+  }
+
+  .overview p {
+    font-size: 24px;
+    margin: 0;
+    width: 583px;
+  }
+
+  /* Workflows: key + diagram */
+  .workflow-key {
+    position: absolute;
+    left: 118px;
+    top: 1372px;
+    width: 307px;
+    z-index: 1;
+  }
+
+  .workflow-key h2 { margin-bottom: 16px; }
+
+  .workflow-key p {
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .key-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-end;
+  }
+
+  .key-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    width: 58px;
+  }
+
+  .key-icons p {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .key-icon-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .key-icon-stack img { display: block; width: 58px; }
+
+  .key-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    width: 155px;
+    font-size: 14px;
+  }
+
+  .key-labels p { margin: 0; }
+
+  .key-labels .group { display: flex; flex-direction: column; gap: 41px; }
+  .key-labels .subgroup { display: flex; flex-direction: column; gap: 40px; }
+  .key-labels .global-btn { display: flex; flex-direction: column; gap: 39px; }
+  .key-labels .jump p { margin: 0; }
+  .key-labels .actions { display: flex; flex-direction: column; gap: 42px; }
+
+  .workflow-cards {
+    position: absolute;
+    left: calc(25% + 64px);
+    top: 1465px;
+    width: 871px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 26px;
+    z-index: 1;
+  }
+
+  .workflow-card-1 {
+    width: 100%;
+    height: 475px;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .workflow-card-1 > img.diagram {
+    position: absolute;
+    left: -0.98%;
+    top: -2.19%;
+    width: 100.93%;
+    height: 114.74%;
+    max-width: none;
+  }
+
+  .workflow-card-1 .wf-icon-49 {
+    position: absolute;
+    left: 591px;
+    top: 272px;
+    width: 151px;
+    height: 149px;
+    object-fit: cover;
+  }
+
+  .wf-dots-vertical {
+    position: absolute;
+    left: 791px;
+    top: 186px;
+    width: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 5;
+  }
+
+  .wf-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: #a3a3a3;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease;
+  }
+
+  .wf-dot.active { background: #000; }
+
+  .wf-carousel {
+    position: relative;
+    width: 100%;
+    height: 507px;
+    overflow: hidden;
+  }
+
+  .wf-viewport {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 475px;
+    background: #fff;
+    border: 5px solid #000;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .wf-track {
+    position: relative;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .wf-slide {
+    flex: 0 0 475px;
+    width: 100%;
+    height: 475px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wf-slide-simple {
+    height: 475px;
+    width: 819px;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wf-flow-image {
+    flex: none;
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .wf-flow-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .storyboard-row {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 30px 40px;
+    box-sizing: border-box;
+  }
+
+  .storyboard-slide-image {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+  }
+
+  .storyboard-slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .wf-slide-simple video {
+    flex: none;
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    background: #000;
+    cursor: pointer;
+  }
+
+  /* Video lightbox (click-to-expand) */
+  .wf-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .wf-lightbox.open { display: flex; }
+
+  .wf-lightbox-inner {
+    position: relative;
+  }
+
+  .wf-lightbox-inner video {
+    max-width: calc(90vw / var(--page-scale, 1));
+    max-height: calc(85vh / var(--page-scale, 1));
+    display: block;
+    border-radius: 12px;
+  }
+
+  .wf-lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    padding: 10px;
+    line-height: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .wf-lightbox-close img { display: block; width: 48px; height: 48px; }
+
+  /* Style Guide */
+  .style-guide {
+    position: absolute;
+    left: 118px;
+    top: 2062px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .style-guide h2 { margin-bottom: 16px; }
+
+  .style-guide-frame {
+    width: 100%;
+    background: #fff;
+    border: 5px solid #000;
+    border-radius: 20px;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .sg-label {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .sg-colors {
+    display: flex;
+    gap: 64px;
+    margin-bottom: 40px;
+  }
+
+  .sg-swatches {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .sg-swatch p {
+    margin: 10px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .sg-chip {
+    width: 90px;
+    height: 90px;
+    border-radius: 4px;
+  }
+
+  .sg-chip-outline { border: 1px solid #d8d8d8; }
+
+  .sg-typography .sg-label { margin-bottom: 16px; }
+
+  .sg-type-cols {
+    display: flex;
+    gap: 64px;
+  }
+
+  .sg-type-col { flex: 1; }
+
+  .sg-type-sample {
+    margin: 0;
+    font-family: 'Average', serif;
+    color: #000;
+  }
+
+  .sg-type-sample + .sg-type-sample { margin-top: 24px; }
+
+  .sg-type-title { font-size: 56px; font-weight: 700; }
+  .sg-type-subtitle { font-size: 32px; font-weight: 400; }
+  .sg-type-credit { font-size: 28px; font-weight: 400; }
+  .sg-type-director { font-size: 24px; font-weight: 400; }
+
+  .sg-type-caption {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #777;
+  }
+
+  /* Style Frames */
+  .wireframes {
+    position: absolute;
+    left: 118px;
+    top: 2979px;
+    width: 1204px;
+    z-index: 1;
+  }
+
+  .wireframes h2 { margin-bottom: 16px; }
+
+  .style-frame-set { margin-bottom: 40px; }
+  .style-frame-set:last-child { margin-bottom: 0; }
+
+  .style-frame-set h3 {
+    margin: 0 0 16px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .style-frame-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .style-frame-grid img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #000;
+    border-radius: 6px;
+  }
+
+  /* Final Prototype */
+  .final-prototype {
+    position: absolute;
+    left: 118px;
+    top: 4519px;
+    width: 1204px;
+    z-index: 0;
+  }
+
+  .final-prototype h2 { margin-bottom: 16px; }
+
+  .final-prototype-frame {
+    height: 720px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mb-mockup {
+    position: relative;
+    width: 1008px;
+    height: 623px;
+    transform: scale(1.15);
+  }
+
+  .mb-lid {
+    position: absolute;
+    left: 98px;
+    top: 0;
+    width: 816px;
+    height: 554px;
+    background: #1a202c;
+    border: 2px solid #4a5568;
+    border-radius: 28px 28px 4px 4px;
+    box-sizing: border-box;
+  }
+
+  .mb-dark-screen {
+    position: absolute;
+    left: 103px;
+    top: 5px;
+    width: 806px;
+    height: 528px;
+    background: #000;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .mb-screen {
+    position: absolute;
+    left: 124px;
+    top: 33px;
+    width: 761px;
+    height: 478px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .mb-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+  }
+
+  .mb-controls {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    gap: 10px;
+    z-index: 1;
+  }
+
+  .mb-ctrl {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .mb-ctrl:hover {
+    background: rgba(0, 0, 0, 0.75);
+    transform: translateY(-2px);
+  }
+
+  .mb-ctrl svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    display: block;
+  }
+
+  .mb-bottom {
+    position: absolute;
+    left: 0;
+    top: 550px;
+    width: 1008px;
+    height: 18px;
+    display: block;
+  }
+
+  .mb-shadow {
+    position: absolute;
+    left: 8px;
+    top: 525px;
+    width: 993px;
+    height: 98px;
+    display: block;
+    pointer-events: none;
+  }
+
+  /* Phone mockups: square + vertical finals, side by side below the laptop */
+  .final-phones-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+    margin-top: 48px;
+  }
+
+  .phone-mockup {
+    position: relative;
+    width: 300px;
+    height: 606px;
+  }
+
+  .phone-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 606px;
+    pointer-events: none;
+    z-index: 1;
+    display: block;
+  }
+
+  .phone-screen {
+    position: absolute;
+    left: 15.8px;
+    top: 12.5px;
+    width: 268.5px;
+    height: 581.2px;
+    border-radius: 22.9px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .phone-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+  }
+
+  .phone-screen-contain video {
+    object-fit: contain;
+  }
+
+  /* Instagram post layout inside the phone screen */
+  .ig-mock {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    font-family: 'Figtree', sans-serif;
+    color: #fff;
+  }
+
+  .ig-header {
+    flex: 0 0 auto;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+
+  .ig-logo {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+  }
+
+  .ig-header-icons {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+
+  .ig-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .ig-media {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .ig-dots {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 5px 0;
+  }
+
+  .ig-dots span {
+    width: 3.5px;
+    height: 3.5px;
+    border-radius: 50%;
+    background: #444;
+  }
+
+  .ig-dots span.active {
+    background: #8e8e8e;
+  }
+
+  .ig-caption-block {
+    flex: 0 0 auto;
+    padding: 4px 10px 6px;
+  }
+
+  .ig-user-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .ig-avatar {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #f9b71c;
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .ig-username {
+    font-size: 9.5px;
+    font-weight: 700;
+  }
+
+  .ig-caption {
+    margin: 0;
+    font-size: 9.5px;
+    line-height: 1.35;
+    color: #fff;
+  }
+
+  .ig-caption .ig-more {
+    color: #8e8e8e;
+  }
+
+  .ig-actions-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+
+  .ig-actions-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .ig-actions-left .ig-icon {
+    width: 13.5px;
+    height: 13.5px;
+  }
+
+  .ig-counts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    font-size: 8px;
+    color: #8e8e8e;
+    line-height: 1.3;
+  }
+
+  .ig-navbar {
+    flex: 0 0 auto;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+  }
+
+  .ig-navbar .ig-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .ig-nav-avatar {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #f9b71c;
+    display: block;
+  }
+
+  /* Back to top button */
+  .back-to-top-button {
+    position: absolute;
+    left: 696px;
+    bottom: 78px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .back-to-top-button.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top-button.visible:hover {
+    transform: translateY(-10px);
+  }
+
+  .back-to-top-button img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wf-row.row-1, .wf-row.row-2 { animation: none; }
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo-mark" href="ribbon-pull/index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
+  <ul class="nav-links">
+    <li><a href="ribbon-pull/home.html">Projects</a></li>
+    <li><a href="ribbon-pull/side-works.html">Side Works</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="kiosk-title">Title Sequence Recreation</h1>
+
+  <img class="bg-wreath" src="assets/title-sequence/bg-wreath.png" alt="">
+
+  <div class="hero-image">
+    <div class="hero-collage">
+      <div class="hero-card hero-card-r0c0"><img src="assets/title-sequence/style-horizontal-1.jpg" alt=""></div>
+      <div class="hero-card hero-card-r0c1"><img src="assets/title-sequence/style-horizontal-3.jpg" alt=""></div>
+      <div class="hero-card hero-card-r0c2"><img src="assets/title-sequence/style-square-4.jpg" alt=""></div>
+      <div class="hero-card hero-card-r1c0"><img src="assets/title-sequence/style-vertical-3.jpg" alt=""></div>
+      <div class="hero-card hero-card-r1c2"><img src="assets/title-sequence/style-horizontal-6.jpg" alt=""></div>
+      <div class="hero-card hero-card-r2c0"><img src="assets/title-sequence/style-horizontal-7.jpg" alt=""></div>
+      <div class="hero-card hero-card-r2c1"><img src="assets/title-sequence/style-horizontal-4.jpg" alt=""></div>
+      <div class="hero-card hero-card-r2c2"><img src="assets/title-sequence/style-horizontal-2.jpg" alt=""></div>
+      <div class="hero-card hero-card-center"><img src="assets/title-sequence/style-horizontal-8.jpg" alt="Home Alone 2 title card"></div>
+    </div>
+  </div>
+
+  <div class="overview">
+    <h2>Overview</h2>
+    <p>Completed in 6 weeks, this project recreates the title sequence for Home Alone 2: Lost in New York (1992), following Kevin McCallister as he's separated from his family and left alone in New York City just before Christmas. I kept the simplicity of the original sequence while incorporating symbolic elements from the film.</p>
+  </div>
+
+  <div class="workflow-key">
+    <h2 class="section-heading">Storyboard</h2>
+    <p>Before animating, I planned out the sequence to work out pacing, composition, and how each scene would hand off to the next.</p>
+  </div>
+
+  <div class="workflow-cards" id="workflowCards">
+    <div class="wf-carousel">
+      <div class="wf-viewport">
+        <div class="storyboard-row">
+          <div class="storyboard-slide-image"><img src="assets/title-sequence/storyboard-1.png" alt="Storyboard panels 1 through 8"></div>
+          <div class="storyboard-slide-image"><img src="assets/title-sequence/storyboard-2.png" alt="Storyboard panels 9 through 16"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-lightbox" id="wfLightbox">
+    <button class="wf-lightbox-close" id="wfLightboxClose" aria-label="Close">
+      <img src="assets/kiosk/lightbox-close-button.svg" alt="">
+    </button>
+    <div class="wf-lightbox-inner" id="wfLightboxInner"></div>
+  </div>
+
+  <div class="style-guide">
+    <h2 class="section-heading">Style Guide</h2>
+    <div class="style-guide-frame">
+      <div class="sg-colors">
+        <div class="sg-color-group">
+          <p class="sg-label">Primary</p>
+          <div class="sg-swatches">
+            <div class="sg-swatch"><div class="sg-chip" style="background:#03182D"></div><p>#03182D<br>R: 3<br>G: 24<br>B: 45</p></div>
+            <div class="sg-swatch"><div class="sg-chip sg-chip-outline" style="background:#FFFFFF"></div><p>#FFFFFF<br>R: 255<br>G: 255<br>B: 255</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#BAC4CE"></div><p>#BAC4CE<br>R: 186<br>G: 196<br>B: 206</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#000000"></div><p>#000000<br>R: 0<br>G: 0<br>B: 0</p></div>
+          </div>
+        </div>
+        <div class="sg-color-group">
+          <p class="sg-label">Accents</p>
+          <div class="sg-swatches">
+            <div class="sg-swatch"><div class="sg-chip" style="background:#F9B71C"></div><p>#F9B71C<br>R: 249<br>G: 183<br>B: 28</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#016DDC"></div><p>#016DDC<br>R: 1<br>G: 109<br>B: 220</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#AB1D1C"></div><p>#AB1D1C<br>R: 171<br>G: 29<br>B: 28</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#FCC6C4"></div><p>#FCC6C4<br>R: 252<br>G: 198<br>B: 196</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#C07D77"></div><p>#C07D77<br>R: 192<br>G: 125<br>B: 119</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#328FD4"></div><p>#328FD4<br>R: 50<br>G: 143<br>B: 212</p></div>
+            <div class="sg-swatch"><div class="sg-chip" style="background:#ECF6FF"></div><p>#ECF6FF<br>R: 236<br>G: 246<br>B: 255</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="sg-typography">
+        <p class="sg-label">Typography</p>
+        <div class="sg-type-cols">
+          <div class="sg-type-col">
+            <p class="sg-type-sample sg-type-title">HOME ALONe2</p>
+            <p class="sg-type-caption">Film Title | Average, Bold | 64 pt</p>
+            <p class="sg-type-sample sg-type-subtitle">LOST IN NEW YORK</p>
+            <p class="sg-type-caption">Subtitle | Average, Regular | 32 pt</p>
+          </div>
+          <div class="sg-type-col">
+            <p class="sg-type-sample sg-type-credit">Macaulay Culkin</p>
+            <p class="sg-type-caption">Cast Credit | Average, Regular | 28 pt</p>
+            <p class="sg-type-sample sg-type-director">A Chris Columbus film</p>
+            <p class="sg-type-caption">Director Credit | Average, Regular | 24 pt</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wireframes">
+    <h2 class="section-heading">Style Frames</h2>
+
+    <div class="style-frame-set">
+      <h3>Horizontal</h3>
+      <div class="style-frame-grid grid-horizontal">
+        <img src="assets/title-sequence/style-horizontal-1.jpg" alt="Title card: A Chris Columbus film">
+        <img src="assets/title-sequence/style-horizontal-2.jpg" alt="Title card: Plaza Hotel storefront with Macaulay Culkin, Joe Pesci, and Daniel Stern">
+        <img src="assets/title-sequence/style-horizontal-3.jpg" alt="Title card: red ribbon banner, and Catherine O'Hara">
+        <img src="assets/title-sequence/style-horizontal-4.jpg" alt="Title card: Duncan's Toy Chest arch, Eddie Bracken">
+        <img src="assets/title-sequence/style-horizontal-5.jpg" alt="Title card: two doves, Kevin Ratray">
+        <img src="assets/title-sequence/style-horizontal-6.jpg" alt="Title card: pigeons eating, Kieran Culkin, Gerry Bamman">
+        <img src="assets/title-sequence/style-horizontal-7.jpg" alt="Title card: Rockefeller Christmas tree, with Tim Curry and Brenda Fricker">
+        <img src="assets/title-sequence/style-horizontal-8.jpg" alt="Title card: HOME ALONe2 Lost in New York over the NYC skyline">
+      </div>
+    </div>
+
+    <div class="style-frame-set">
+      <h3>Square</h3>
+      <div class="style-frame-grid grid-square">
+        <img src="assets/title-sequence/style-square-1.jpg" alt="Square frame: dove wing corner detail">
+        <img src="assets/title-sequence/style-square-2.jpg" alt="Square frame: dove descending on a string">
+        <img src="assets/title-sequence/style-square-3.jpg" alt="Square frame: dove descending, line appears underneath">
+        <img src="assets/title-sequence/style-square-4.jpg" alt="Square frame: HOME ALONe2 Lost in New York over the NYC skyline">
+      </div>
+    </div>
+
+    <div class="style-frame-set">
+      <h3>Vertical</h3>
+      <div class="style-frame-grid grid-vertical">
+        <img src="assets/title-sequence/style-vertical-1.jpg" alt="Vertical frame: ornaments starting to land on the tree">
+        <img src="assets/title-sequence/style-vertical-2.jpg" alt="Vertical frame: tree filling in with ornaments">
+        <img src="assets/title-sequence/style-vertical-3.jpg" alt="Vertical frame: tree complete with a glowing star on top">
+        <img src="assets/title-sequence/style-vertical-4.jpg" alt="Vertical frame: HOME ALONe2 Lost in New York over the NYC skyline">
+      </div>
+    </div>
+  </div>
+
+  <div class="final-prototype">
+    <h2 class="section-heading">Final</h2>
+    <div class="final-prototype-frame">
+      <div class="mb-mockup">
+        <div class="mb-lid"></div>
+        <div class="mb-dark-screen"></div>
+        <div class="mb-screen">
+          <video src="assets/title-sequence/final-horizontal.mp4" muted loop autoplay playsinline preload="auto"></video>
+          <div class="mb-controls">
+            <button class="mb-ctrl mb-ctrl-play" type="button" aria-label="Pause video"></button>
+            <button class="mb-ctrl mb-ctrl-mute" type="button" aria-label="Unmute video"></button>
+          </div>
+        </div>
+        <img class="mb-bottom" src="assets/title-sequence/macbook-bottom.svg" alt="">
+        <img class="mb-shadow" src="assets/title-sequence/macbook-shadow.svg" alt="">
+      </div>
+    </div>
+    <div class="final-phones-row">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="ig-mock">
+            <div class="ig-header">
+              <span class="ig-logo">Instagram</span>
+              <div class="ig-header-icons">
+                <svg class="ig-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <svg class="ig-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg class="ig-icon" viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </div>
+            </div>
+            <div class="ig-media">
+              <video src="assets/title-sequence/final-vertical.mp4" muted loop autoplay playsinline preload="auto"></video>
+              <div class="mb-controls">
+                <button class="mb-ctrl mb-ctrl-play" type="button" aria-label="Pause video"></button>
+                <button class="mb-ctrl mb-ctrl-mute" type="button" aria-label="Unmute video"></button>
+              </div>
+            </div>
+            <div class="ig-dots">
+              <span class="active"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="ig-caption-block">
+              <div class="ig-user-row">
+                <span class="ig-avatar"></span>
+                <span class="ig-username">DUNDUN</span>
+              </div>
+              <p class="ig-caption">After snarky youth Kevin McCallister loses track of his father at the airport, he mistakenly gets on a plane headed for NYC<span class="ig-more">&hellip; more</span></p>
+              <div class="ig-actions-row">
+                <div class="ig-actions-left">
+                  <svg class="ig-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                  <svg class="ig-icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                  <svg class="ig-icon" viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                  <svg class="ig-icon" viewBox="0 0 24 24" stroke="none" fill="#fff"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg>
+                </div>
+                <div class="ig-counts">
+                  <span>2 comments</span>
+                  <span>47 likes</span>
+                </div>
+              </div>
+            </div>
+            <div class="ig-navbar">
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V10"></path></svg>
+              <svg class="ig-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg class="ig-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6"></rect><polygon points="9.5,8 16,12 9.5,16" fill="#fff" stroke="none"></polygon></svg>
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M6 8h12l1 13H5z"></path><path d="M9 8a3 3 0 0 1 6 0"></path></svg>
+              <span class="ig-nav-avatar"></span>
+            </div>
+          </div>
+        </div>
+        <img class="phone-frame" src="assets/title-sequence/iphone-mockup-frame.png" alt="">
+      </div>
+      <div class="phone-mockup">
+        <div class="phone-screen phone-screen-contain">
+          <div class="ig-mock">
+            <div class="ig-header">
+              <span class="ig-logo">Instagram</span>
+              <div class="ig-header-icons">
+                <svg class="ig-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <svg class="ig-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg class="ig-icon" viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </div>
+            </div>
+            <div class="ig-media">
+              <video src="assets/title-sequence/final-square.mp4" muted loop autoplay playsinline preload="auto"></video>
+              <div class="mb-controls">
+                <button class="mb-ctrl mb-ctrl-play" type="button" aria-label="Pause video"></button>
+                <button class="mb-ctrl mb-ctrl-mute" type="button" aria-label="Unmute video"></button>
+              </div>
+            </div>
+            <div class="ig-dots">
+              <span></span><span class="active"></span><span></span><span></span><span></span>
+            </div>
+            <div class="ig-caption-block">
+              <div class="ig-user-row">
+                <span class="ig-avatar"></span>
+                <span class="ig-username">DUNDUN</span>
+              </div>
+              <p class="ig-caption">After snarky youth Kevin McCallister loses track of his father at the airport, he mistakenly gets on a plane headed for NYC<span class="ig-more">&hellip; more</span></p>
+              <div class="ig-actions-row">
+                <div class="ig-actions-left">
+                  <svg class="ig-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                  <svg class="ig-icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                  <svg class="ig-icon" viewBox="0 0 24 24"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                  <svg class="ig-icon" viewBox="0 0 24 24" stroke="none" fill="#fff"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg>
+                </div>
+                <div class="ig-counts">
+                  <span>2 comments</span>
+                  <span>47 likes</span>
+                </div>
+              </div>
+            </div>
+            <div class="ig-navbar">
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V10"></path></svg>
+              <svg class="ig-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg class="ig-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6"></rect><polygon points="9.5,8 16,12 9.5,16" fill="#fff" stroke="none"></polygon></svg>
+              <svg class="ig-icon" viewBox="0 0 24 24"><path d="M6 8h12l1 13H5z"></path><path d="M9 8a3 3 0 0 1 6 0"></path></svg>
+              <span class="ig-nav-avatar"></span>
+            </div>
+          </div>
+        </div>
+        <img class="phone-frame" src="assets/title-sequence/iphone-mockup-frame.png" alt="">
+      </div>
+    </div>
+  </div>
+
+  <button class="back-to-top-button" id="backToTopButton" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+    <img src="assets/kiosk/back-to-top-button.svg" alt="">
+  </button>
+</div>
+
+<script>
+  const button = document.getElementById('backToTopButton');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+  observer.observe(button);
+
+  const wfTrack = document.getElementById('wfTrack');
+  const wfSlides = [...document.querySelectorAll('.wf-slide')];
+  const wfDots = [...document.querySelectorAll('.wf-dot')];
+  const wfLightbox = document.getElementById('wfLightbox');
+  const wfLightboxInner = document.getElementById('wfLightboxInner');
+  const wfLightboxClose = document.getElementById('wfLightboxClose');
+  let wfIndex = 0;
+  let wfLightboxOrigin = null;
+
+  function stopAllWfVideos() {
+    wfSlides.forEach((slide) => {
+      const video = slide.querySelector('video');
+      if (video) { video.pause(); }
+    });
+  }
+
+  function collapseWfVideo() {
+    const video = wfLightboxInner.querySelector('video');
+    if (!video || !wfLightboxOrigin) return;
+    video.muted = true;
+    wfLightboxOrigin.appendChild(video);
+    const controls = wfLightboxInner.querySelector('.mb-controls');
+    if (controls) { wfLightboxOrigin.appendChild(controls); }
+    wfLightbox.classList.remove('open');
+    wfLightboxOrigin = null;
+  }
+
+  function goToWfStep(step) {
+    if (step === wfIndex) return;
+    collapseWfVideo();
+    stopAllWfVideos();
+    wfIndex = step;
+    wfTrack.style.top = `-${step * 475}px`;
+    const activeSlide = wfSlides[step];
+    wfSlides.forEach((slide) => slide.classList.toggle('active', slide === activeSlide));
+    wfDots.forEach((dot) => dot.classList.toggle('active', dot.dataset.dot === activeSlide.dataset.dot));
+    const video = activeSlide.querySelector('video');
+    if (video) { video.currentTime = 0; video.play().catch(() => {}); }
+  }
+
+  wfDots.forEach((dot) => {
+    dot.addEventListener('click', () => goToWfStep(Number(dot.dataset.step)));
+  });
+
+  const wfViewport = document.querySelector('.wf-viewport');
+  let wfWheelLocked = false;
+  let wfWheelIdleTimer = null;
+
+  wfViewport.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    clearTimeout(wfWheelIdleTimer);
+    wfWheelIdleTimer = setTimeout(() => { wfWheelLocked = false; }, 200);
+    if (wfWheelLocked) return;
+    const direction = e.deltaY > 0 ? 1 : -1;
+    let next = wfIndex + direction;
+    if (direction > 0 && wfIndex === wfSlides.length - 1) {
+      next = 0;
+    } else if (next < 0 || next > wfSlides.length - 1) {
+      return;
+    }
+    wfWheelLocked = true;
+    goToWfStep(next);
+  }, { passive: false });
+
+  document.querySelectorAll('.wf-slide-simple video, .mb-screen video, .phone-screen video').forEach((video) => {
+    video.addEventListener('click', () => {
+      wfLightboxOrigin = video.parentElement;
+      wfLightboxInner.appendChild(video);
+      const controls = wfLightboxOrigin.querySelector('.mb-controls');
+      if (controls) { wfLightboxInner.appendChild(controls); }
+      wfLightbox.classList.add('open');
+      video.muted = false;
+      video.play().catch(() => {});
+    });
+  });
+
+  // Once the page has loaded, buffer the carousel videos one at a time in slide order.
+  // They stay paused; goToWfStep and the lightbox are the only things that play them.
+  window.addEventListener('load', () => {
+    const wfVideos = wfSlides.map((slide) => slide.querySelector('video')).filter(Boolean);
+    const warmUp = (i) => {
+      if (i >= wfVideos.length) return;
+      const video = wfVideos[i];
+      let advanced = false;
+      const next = () => {
+        if (advanced) return;
+        advanced = true;
+        warmUp(i + 1);
+      };
+      if (!video.paused || video.readyState >= 3) { next(); return; }
+      video.addEventListener('canplaythrough', next, { once: true });
+      video.addEventListener('error', next, { once: true });
+      setTimeout(next, 20000);
+      video.preload = 'auto';
+      video.load();
+    };
+    setTimeout(() => warmUp(0), 1200);
+  });
+
+  wfLightboxClose.addEventListener('click', collapseWfVideo);
+  wfLightbox.addEventListener('click', (e) => { if (e.target === wfLightbox) collapseWfVideo(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') collapseWfVideo(); });
+
+  // Final video: pause/play and mute/unmute controls
+  const PAUSE_ICON = '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>';
+  const PLAY_ICON = '<svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"></polygon></svg>';
+  const SOUND_ICON = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"></path><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"></path><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>';
+  const MUTE_ICON = '<img src="assets/title-sequence/mute-icon.png" alt="" style="width:16px;height:13px;display:block;">';
+
+  function setupScreenControls(screen) {
+    const video = screen.querySelector('video');
+    const playBtn = screen.querySelector('.mb-ctrl-play');
+    const muteBtn = screen.querySelector('.mb-ctrl-mute');
+    if (!video || !playBtn || !muteBtn) return;
+
+    function updatePlayIcon() {
+      playBtn.innerHTML = video.paused ? PLAY_ICON : PAUSE_ICON;
+      playBtn.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+    }
+
+    function updateMuteIcon() {
+      muteBtn.innerHTML = video.muted ? MUTE_ICON : SOUND_ICON;
+      muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+    }
+
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (video.paused) { video.play().catch(() => {}); } else { video.pause(); }
+    });
+    muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      video.muted = !video.muted;
+      updateMuteIcon();
+    });
+    video.addEventListener('play', updatePlayIcon);
+    video.addEventListener('pause', updatePlayIcon);
+    video.addEventListener('volumechange', updateMuteIcon);
+    updatePlayIcon();
+    updateMuteIcon();
+  }
+
+  document.querySelectorAll('.mb-screen, .phone-screen').forEach(setupScreenControls);
+</script>
+</body>
+</html>

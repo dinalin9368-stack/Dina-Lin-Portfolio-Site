@@ -431,6 +431,10 @@
     <img src="assets/alaska/hero.png" alt="Alaska Digital ID app screens">
   </div>
 
+  <a class="process-tag is-away" id="processTag" href="assets/Alaska Digital ID Process Doc.pdf" target="_blank" rel="noopener" aria-label="Process Doc. (opens the process document)">
+    <img src="assets/kiosk/process-doc.svg" alt="" width="356" height="76.5163">
+  </a>
+
   <div class="overview">
     <h2>Overview</h2>
     <p>Completed over the span of 6 weeks, this project reimagines the driver’s license as a smartphone-based digital ID for the state of Alaska, with a full ID view and a quick age-verification view.</p>
@@ -528,11 +532,18 @@
   const wfLightboxClose = document.getElementById('wfLightboxClose');
   let wfLightboxOrigin = null;
 
+  let wfSavedLeft = null;
+
   function collapseWfVideo() {
     const frameEl = wfLightboxInner.querySelector('.final-prototype-frame');
     if (!frameEl || !wfLightboxOrigin) return;
     frameEl.style.transform = '';
     frameEl.style.width = '';
+    if (wfSavedLeft) {
+      frameEl.querySelector('.phone-device-frame').style.left = wfSavedLeft.deviceLeft;
+      frameEl.querySelector('.fp-video-wrap').style.left = wfSavedLeft.videoWrapLeft;
+      wfSavedLeft = null;
+    }
     wfLightboxOrigin.appendChild(frameEl);
     wfLightbox.classList.remove('open');
     wfLightboxOrigin = null;
@@ -543,10 +554,20 @@
       if (wfLightbox.classList.contains('open')) return;
       const frameEl = video.closest('.final-prototype-frame');
       const deviceImg = frameEl.querySelector('.phone-device-frame');
+      const videoWrap = frameEl.querySelector('.fp-video-wrap');
       wfLightboxOrigin = frameEl.parentElement;
       const imgRect = deviceImg.getBoundingClientRect();
       const targetHeight = window.innerHeight * 0.85;
       const scale = Math.min(2, targetHeight / imgRect.height);
+
+      // The phone is centered within the full-width section (deviceImg/videoWrap
+      // carry a left offset for that), but the lightbox frame is sized to just the
+      // phone itself — so that offset has to be zeroed here and restored on close.
+      wfSavedLeft = { deviceLeft: deviceImg.style.left, videoWrapLeft: videoWrap.style.left };
+      const videoWrapLeftOffset = parseFloat(videoWrap.style.left) - parseFloat(deviceImg.style.left || '0');
+      deviceImg.style.left = '0px';
+      videoWrap.style.left = videoWrapLeftOffset + 'px';
+
       frameEl.style.width = imgRect.width + 'px';
       wfLightboxInner.appendChild(frameEl);
       frameEl.style.transform = `scale(${scale})`;
