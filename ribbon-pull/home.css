@@ -54,8 +54,8 @@ html, body {
   left: 128px;
   top: 1063px;
   margin: 0;
-  font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
-  font-weight: 500;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
   font-size: 96px;
 }
 
@@ -125,8 +125,8 @@ a.circle {
 .project-title {
   position: absolute;
   margin: 0;
-  font-family: 'imperial-urw', 'Imperial URW', 'Figtree', sans-serif;
-  font-weight: 400;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 500;
   font-size: 64px;
   line-height: 1.05;
 }

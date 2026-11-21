@@ -15,4 +15,9 @@
 
   apply();
   window.addEventListener('resize', apply);
+  // Fonts/images can still be settling when apply() first runs (this script is
+  // synchronous, in <head>, before layout) -- re-run once everything has
+  // actually loaded so fixed-position elements (e.g. the resume download
+  // ribbon) don't end up a few px off from where they settle on repeat visits.
+  window.addEventListener('load', apply);
 })();

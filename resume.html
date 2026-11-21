@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="ribbon-pull/js/scale.js?v=2" data-mode="page"></script>
+<title>Resume — Dina Lin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=11">
+<style>
+  :root {
+    --page-max: 1440px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: #000000;
+    font-family: 'Figtree', sans-serif;
+  }
+
+  .page {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    position: relative;
+    overflow-x: visible;
+  }
+
+  .resume-hero {
+    position: relative;
+    height: 720px;
+  }
+
+  .kiosk-title {
+    position: absolute;
+    left: 118px;
+    top: 130px;
+    margin: 0;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900;
+    font-size: 96px;
+    z-index: 2;
+  }
+
+  /* Name + role + contact */
+  .resume-name {
+    position: absolute;
+    left: 118px;
+    top: 308px;
+    margin: 0;
+    font-weight: 900;
+    font-size: 318px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .resume-name .accent { color: #75a08b; }
+
+  .resume-keep-scrolling {
+    position: absolute;
+    left: 50%;
+    top: 820px;
+    transform: translateX(-50%);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .resume-keep-scrolling span {
+    font-size: 13px;
+    color: #6b7566;
+    white-space: nowrap;
+  }
+
+  .resume-keep-scrolling img {
+    display: block;
+    width: 14px;
+    height: 14px;
+    animation: resume-hint-bob 1.6s ease-in-out infinite;
+  }
+
+  /* Numbered sections (About Me / Education / Experience): pinned in place
+     while the page scrolls through them, each crossfading into the next --
+     only one is ever on screen at a time. The sticky panel fills the viewport
+     below the nav so its content centers in the middle of the screen, not in
+     a short fixed-height box pinned near the top. */
+  .resume-story {
+    position: relative;
+    height: calc(100vh - 124px + 1800px); /* sticky panel height + 2 transitions x 900px -- Experience
+      releases into the cards right away instead of holding an empty pinned gap */
+  }
+
+  .resume-story-sticky {
+    position: sticky;
+    top: 124px;
+    height: calc(100vh - 124px);
+    overflow: hidden;
+  }
+
+  .resume-panel {
+    position: absolute;
+    inset: 0;
+    padding: 0 118px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(28px);
+    pointer-events: none;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  /* Experience sits closer to the bottom of the pinned area, not dead
+     center, since the cards grid follows right behind it. */
+  .panel-exp {
+    align-items: flex-end;
+    padding-bottom: 64px;
+  }
+
+  .resume-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Label + row travel together as one block (small fixed gap between them)
+     so they stay close regardless of the panel's own height. */
+  .resume-panel-inner {
+    width: 100%;
+  }
+
+  .resume-panel-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  /* Sparrow perched on the "01" numeral -- scaled and positioned to match the
+     reference composite exactly (calibrated against the "Hi," cap-height so it
+     lines up regardless of viewport, since this row is otherwise flex-centered
+     rather than fixed-position). Sized well below the source's native 2000px
+     width so it stays sharp, never blurred from upscaling. */
+  .resume-sparrow {
+    position: absolute;
+    left: 129px;
+    top: -80px;
+    width: 328px;
+    height: 246px;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Bird perched on the "02" numeral, calibrated against the "Education"
+     label and the numeral's own top edge against the reference composite. */
+  .resume-bird-edu {
+    position: absolute;
+    left: 768px;
+    top: -133px;
+    width: 446px;
+    height: 335px;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Bird perched on the "03" numeral, calibrated against the "Experience"
+     label's trailing "ence" (the only part not cropped out of the reference
+     composite) and the numeral's own top edge. */
+  .resume-bird-exp {
+    position: absolute;
+    left: 61px;
+    top: -83px;
+    width: 344px;
+    height: 258px;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .resume-label {
+    margin: 0 0 24px;
+    font-weight: 500;
+    font-size: 24px;
+    color: #75a08b;
+  }
+
+  .panel-edu .resume-label { text-align: right; }
+
+  .resume-numeral {
+    margin: 0;
+    flex: none;
+    font-weight: 900;
+    font-size: 300px;
+    line-height: normal;
+    color: rgba(117, 160, 139, 0.2);
+    pointer-events: none;
+  }
+
+  .resume-exp-heading {
+    margin: 0;
+    max-width: 794px;
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 1.08;
+  }
+
+  .resume-statement {
+    margin: 0;
+    max-width: 794px;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.08;
+  }
+
+  .resume-statement .hi {
+    font-weight: 900;
+    font-size: 58px;
+  }
+
+  .resume-education {
+    margin: 0;
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 1.08;
+  }
+
+  .resume-education p { margin: 0; }
+
+  /* Experience / project cards: a uniform 3-column grid, each cell 350x350
+     with a 77px gap -- matches the content width (1204px) used elsewhere on
+     the site. */
+  .resume-cards {
+    width: 1204px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    gap: 77px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .resume-cards.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .resume-card {
+    width: 350px;
+    height: 350px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .resume-card h3 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 30px;
+  }
+
+  /* A couple of titles are meant to read on one line (matching the Figma
+     frame) but come within a few px of wrapping at this card width. */
+  .resume-card h3.nowrap {
+    white-space: nowrap;
+    letter-spacing: -0.3px;
+  }
+
+  .resume-card .role {
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: #737373;
+  }
+
+  .resume-card .desc {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #262626;
+  }
+
+  .resume-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .resume-tags span {
+    background: #f0f3f1;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #262626;
+    white-space: nowrap;
+  }
+
+  /* Download ribbon stays fixed in place on screen while the page scrolls;
+     the "just a quick scan?" hint (below) scrolls away with the hero as
+     normal. */
+  .resume-download {
+    position: fixed;
+    left: 1347px;
+    top: 259px;
+    width: 356px;
+    height: 76.5163px;
+    display: block;
+    line-height: 0;
+    z-index: 11;
+    transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .resume-download img { display: block; width: 100%; height: 100%; }
+
+  /* Mostly off-canvas by default (only the ribbon's tip shows past the
+     1440px frame); hovering/focusing slides the whole ribbon into view,
+     matching the Process Doc. tag's tuck/reveal on the Alaska case study. */
+  .resume-download:hover,
+  .resume-download:focus-visible {
+    transform: translateX(-263px);
+  }
+
+  .resume-download:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 4px;
+  }
+
+  .resume-hint {
+    position: absolute;
+    left: 1310px;
+    top: 202px;
+    margin: 0;
+    font-size: 13px;
+    color: #6b7566;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .resume-hint-arrow {
+    position: absolute;
+    left: 1354.5px;
+    top: 224px;
+    width: 14px;
+    height: 14px;
+    z-index: 2;
+    animation: resume-hint-bob 1.6s ease-in-out infinite;
+  }
+
+  /* The whole page is zoomed to fit the viewport (see .scale-page), which would
+     otherwise shrink this icon on anything narrower than the 1440px design --
+     counter-scale it so it always renders at a true, fixed 14x14px, matching the
+     opening ribbon page's hint arrow. Baked into the keyframes (rather than a
+     separate base transform) since an animation's transform replaces the whole
+     property for its duration. */
+  @keyframes resume-hint-bob {
+    0%, 100% { transform: scale(calc(1 / var(--page-scale, 1))) translateY(0); }
+    50% { transform: scale(calc(1 / var(--page-scale, 1))) translateY(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .resume-hint-arrow,
+    .resume-keep-scrolling img { animation: none; }
+  }
+
+  /* Back to top */
+  .back-to-top {
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin: 96px auto 78px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .back-to-top.visible:hover {
+    transform: translateY(-10px);
+  }
+
+  .back-to-top img {
+    position: absolute;
+    inset: -4.17%;
+    display: block;
+    width: 108.34%;
+    height: 108.34%;
+    max-width: none;
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo-mark" href="ribbon-pull/index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
+  <ul class="nav-links">
+    <li><a href="ribbon-pull/home.html">Projects</a></li>
+    <li><a href="ribbon-pull/side-works.html">Side Works</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<a class="resume-download" href="assets/resume/Dina-Lin-Resume.docx" download aria-label="Download resume (.docx)">
+  <img src="assets/resume/download-ribbon.svg" alt="">
+</a>
+
+<div class="page">
+  <div class="resume-hero">
+    <h1 class="kiosk-title">Resume</h1>
+
+    <p class="resume-name"><span class="accent">D</span>ina <span class="accent">L</span>in</p>
+
+    <div class="resume-keep-scrolling">
+      <span>keep scrolling</span>
+      <img src="assets/resume/hint-arrow.svg" alt="">
+    </div>
+
+    <p class="resume-hint">just a quick scan?</p>
+    <img class="resume-hint-arrow" src="assets/resume/hint-arrow.svg" alt="">
+  </div>
+
+  <div class="resume-story" id="resumeStory">
+    <div class="resume-story-sticky">
+      <div class="resume-panel panel-about active" data-panel="0">
+        <div class="resume-panel-inner">
+          <p class="resume-label">About Me</p>
+          <div class="resume-panel-row">
+            <p class="resume-numeral">01</p>
+            <p class="resume-statement"><span class="hi">Hi,</span> I&rsquo;m Dina, an interactive designer based in Staten Island, New York. Born with an introverted personality, I naturally enjoy being the listener in conversations. I like to collect postcards from anywhere I visit. And in my design work, I love creating little details that make someone smile the moment they notice them.</p>
+            <canvas class="resume-sparrow" id="resumeSparrow" aria-hidden="true"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="resume-panel panel-edu" data-panel="1">
+        <div class="resume-panel-inner">
+          <p class="resume-label">Education</p>
+          <div class="resume-panel-row">
+            <div class="resume-education">
+              <p>BFA in New Media Design</p>
+              <p>RIT &middot; Class of 2027</p>
+            </div>
+            <p class="resume-numeral">02</p>
+            <canvas class="resume-bird-edu" id="resumeBirdEdu" aria-hidden="true"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="resume-panel panel-exp" data-panel="2">
+        <div class="resume-panel-inner">
+          <p class="resume-label">Experience</p>
+          <div class="resume-panel-row">
+            <p class="resume-numeral">03</p>
+            <p class="resume-exp-heading">Club, Jobs and Projects</p>
+            <canvas class="resume-bird-exp" id="resumeBirdExp" aria-hidden="true"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resume-cards" id="resumeCards">
+    <article class="resume-card">
+      <h3 class="nowrap">Asian Culture Society</h3>
+      <p class="role">Executive Assistant &amp; Media Team</p>
+      <p class="desc">One of the largest Asian cultural organizations at RIT. Event decor &amp; Instagram graphics for ACS.</p>
+      <div class="resume-tags">
+        <span>Event Branding</span><span>Adobe Illustrator</span><span>Figma</span><span>Visual Presentations</span><span>Print &amp; Decor Design</span>
+      </div>
+    </article>
+    <article class="resume-card">
+      <h3>House Party</h3>
+      <p class="role">Design Collaborator</p>
+      <p class="desc">Work with a 15+ person team of founders and collaborators to turn early brand concepts into prototypes and present ideas for team review.</p>
+      <div class="resume-tags">
+        <span>Procreate</span><span>Collaboration</span><span>Google Sheets</span><span>Visual Presentations</span><span>Communication</span>
+      </div>
+    </article>
+    <article class="resume-card">
+      <h3>Richmond County Day Camp</h3>
+      <p class="role">Art Specialist</p>
+      <p class="desc">Planned and led 20+ arts and crafts projects over 7-week sessions, teaching an average of 90 campers (ages 4–14) per day.</p>
+      <div class="resume-tags">
+        <span>Creative Problem-Solving</span><span>Communication</span><span>Mentorship</span><span>Adaptability</span>
+      </div>
+    </article>
+    <article class="resume-card">
+      <h3>RIT Dining</h3>
+      <p class="role">Student Employee</p>
+      <p class="desc">Work multiple stations in a high-volume campus kitchen, managing time and shifting priorities during peak rushes.</p>
+      <div class="resume-tags">
+        <span>Multitasking</span><span>Reliability</span><span>Teamwork</span><span>Time Management</span><span>Works Well Under Pressure</span>
+      </div>
+    </article>
+    <article class="resume-card">
+      <h3>Flower Kiosk</h3>
+      <p class="role">Academic Project</p>
+      <p class="desc">Designed a self-service flower kiosk experience for travelers on long layovers at airports and train stations.</p>
+      <div class="resume-tags">
+        <span>Brand Identity</span><span>Consumer Research</span><span>Visual Presentations</span><span>After Effects</span>
+      </div>
+    </article>
+    <article class="resume-card">
+      <h3>Red Panda Children&rsquo;s Book</h3>
+      <p class="role">Academic Project</p>
+      <p class="desc">Researched red panda diet and turned findings into a written and illustrated children&rsquo;s book for a young audience.</p>
+      <div class="resume-tags">
+        <span>Consumer Research</span><span>Figma</span><span>Procreate</span><span>Illustration</span><span>Simplifying Complex Information</span>
+      </div>
+    </article>
+  </div>
+
+  <a class="back-to-top" id="backToTop" href="#top" aria-label="Back to top">
+    <img src="assets/resume/back-to-top.svg" alt="">
+  </a>
+</div>
+
+<script src="ribbon-pull/js/back-to-top.js?v=1"></script>
+<script>
+  // Pins the About Me / Education / Experience trio in one spot while scrolling
+  // through them, crossfading one into the next so only one is ever visible.
+  (function () {
+    var story = document.getElementById('resumeStory');
+    var panels = story && story.querySelectorAll('.resume-panel');
+    var cards = document.getElementById('resumeCards');
+    if (!story || !panels.length) return;
+
+    var STICKY_TOP = 124; // matches .resume-story-sticky's top
+    var STAGE_PX = 900; // design px of scroll per panel transition -- generous dwell so a quick flick doesn't skip a section
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function update() {
+      // getBoundingClientRect is in rendered (zoomed) pixels here -- scale.js
+      // zooms the whole page -- so design-px constants have to be converted
+      // into that same space via window.pageScale before comparing.
+      var scale = window.pageScale || 1;
+      var rect = story.getBoundingClientRect();
+      var scrolled = Math.max(0, (STICKY_TOP * scale) - rect.top);
+      // Only (panels.length - 1) transitions get dwell time -- once the last
+      // panel (Experience) is reached the sticky section has no more room
+      // left and releases right away, instead of holding an empty gap above
+      // the cards.
+      var stage = Math.min(panels.length - 1, Math.floor(scrolled / (STAGE_PX * scale)));
+      panels.forEach(function (panel, i) {
+        panel.classList.toggle('active', i === stage);
+      });
+      // The cards appear together with the Experience panel (the last stage)
+      // -- no separate scroll-into-view fade once that title is already up.
+      // Toggled both ways so scrolling back up to an earlier panel hides the
+      // cards again -- they should never show at the same time as a panel.
+      if (cards) {
+        cards.classList.toggle('visible', stage === panels.length - 1);
+      }
+    }
+
+    if (reduceMotion) {
+      panels.forEach(function (panel) { panel.classList.add('active'); });
+      if (cards) cards.classList.add('visible');
+      return;
+    }
+
+    // rAF-throttled: also makes sure geometry is read right before paint,
+    // after layout has settled, rather than mid-scroll.
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        update();
+        ticking = false;
+      });
+    }
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('pagescale', onScroll);
+  })();
+
+  // Birds perched on the resume numerals: canvas sprite animations played the
+  // same way the opening ribbon-pull plays its frames, except these ping-pong
+  // (look, hold, look back) on a loop instead of playing once.
+  function initFrameBird(canvasId, folder, frameCount, cssW, cssH, stepMs) {
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var frameUrl = function (i) {
+      return 'assets/resume/' + folder + '/frame-' + String(i + 1).padStart(3, '0') + '.png';
+    };
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var currentImg = null;
+
+    function sizeCanvas() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+      if (currentImg) draw(currentImg);
+    }
+
+    function draw(img) {
+      currentImg = img;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+
+    function loadImage(url) {
+      return new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.onload = function () { resolve(img); };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    sizeCanvas();
+    window.addEventListener('resize', sizeCanvas);
+
+    var urls = [];
+    for (var i = 0; i < frameCount; i++) urls.push(loadImage(frameUrl(i)));
+
+    Promise.all(urls).then(function (frames) {
+      draw(frames[0]);
+      if (reduceMotion) return;
+
+      var mid = [];
+      for (var m = 1; m < frameCount - 1; m++) mid.push(m);
+      var sequence = [0].concat(mid, [frameCount - 1], mid.slice().reverse());
+      var HOLD_MS = 900;
+      var step = 0;
+
+      function tick() {
+        step = (step + 1) % sequence.length;
+        draw(frames[sequence[step]]);
+        var atEnd = sequence[step] === 0 || sequence[step] === frameCount - 1;
+        setTimeout(tick, atEnd ? HOLD_MS : stepMs);
+      }
+
+      setTimeout(tick, HOLD_MS);
+    });
+  }
+
+  initFrameBird('resumeSparrow', 'sparrow-frames', 7, 328, 246, 167);
+  initFrameBird('resumeBirdEdu', 'bird2-frames', 5, 446, 335, 167);
+  initFrameBird('resumeBirdExp', 'bird3-frames', 5, 344, 258, 167);
+</script>
+</body>
+</html>

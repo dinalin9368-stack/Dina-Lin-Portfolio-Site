@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="js/scale.js?v=1" data-mode="page"></script>
+<script src="js/scale.js?v=2" data-mode="page"></script>
 <title>Side Works</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="nav.css?v=10">
-<link rel="stylesheet" href="side-works.css?v=25">
+<link rel="stylesheet" href="nav.css?v=11">
+<link rel="stylesheet" href="side-works.css?v=26">
 </head>
 <body>
 <nav class="nav">
@@ -16,8 +16,8 @@
   <ul class="nav-links">
     <li><a href="home.html">Projects</a></li>
     <li><a href="side-works.html">Side Works</a></li>
-    <li><a href="#">Resume</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="../resume.html">Resume</a></li>
+    <li><a href="../contact.html">Contact</a></li>
   </ul>
 </nav>
 
@@ -278,14 +278,14 @@
         media: {
           type: 'video-sequence',
           srcs: [
-            'assets/side-works/beats-logo.mp4',
-            'assets/side-works/ibm-logo.mp4',
-            'assets/side-works/lg-logo.mp4',
+            { src: 'assets/side-works/beats-logo.mp4' },
+            { src: 'assets/side-works/ibm-logo.mp4' },
+            // The LG clip has a faint border baked into its own exported pixels;
+            // mask it with the card's background color so it reads as a clean
+            // edge. Scoped to this clip only -- Beats and IBM don't have it.
+            { src: 'assets/side-works/lg-logo.mp4', maskEdges: true },
           ],
           aspect: 1920 / 1080,
-          // The LG clip has a faint border baked into its own exported pixels;
-          // mask it with the card's background color so it reads as a clean edge.
-          maskEdges: true,
         },
         message: 'Three 5-second logo animations for a Motion Design assignment on bringing a brand’s identity to life through motion. For each one I moved from a more abstract form into the concrete logo, and from fast, dynamic motion into a slower resolve, animating Beats, IBM, and LG.',
         tools: [
@@ -371,11 +371,12 @@
         // logo animations) shown on a single card.
         el = document.createElement('video');
         el.autoplay = true; el.muted = true; el.playsInline = true;
-        var seqIndex = 0;
-        el.src = data.media.srcs[seqIndex];
+        el._seqIndex = 0;
+        el.src = data.media.srcs[0].src;
         el.addEventListener('ended', function () {
-          seqIndex = (seqIndex + 1) % data.media.srcs.length;
-          el.src = data.media.srcs[seqIndex];
+          el._seqIndex = (el._seqIndex + 1) % data.media.srcs.length;
+          el.src = data.media.srcs[el._seqIndex].src;
+          videoWrap.classList.toggle('mask-edges', !!data.media.srcs[el._seqIndex].maskEdges);
           el.play().catch(function () {});
         });
       } else {
@@ -399,9 +400,13 @@
       if (wrapH > maxH) { wrapH = maxH; wrapW = maxH * data.media.aspect; }
       videoWrap.style.width = wrapW + 'px';
       videoWrap.style.height = wrapH + 'px';
-      videoWrap.classList.toggle('mask-edges', !!data.media.maskEdges);
       var mediaEl = getMediaElement(index);
       videoWrap.appendChild(mediaEl);
+      if (data.media.type === 'video-sequence') {
+        videoWrap.classList.toggle('mask-edges', !!data.media.srcs[mediaEl._seqIndex].maskEdges);
+      } else {
+        videoWrap.classList.toggle('mask-edges', !!data.media.maskEdges);
+      }
       if (data.media.crop) {
         // Crops to an exact rectangle (drawn in Figma over a native-resolution
         // frame of the media) and rounds it to that same rectangle's corner

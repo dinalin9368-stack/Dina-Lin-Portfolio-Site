@@ -390,7 +390,7 @@ html, body {
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background: #fcfcfc;
+  background: #fff;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
@@ -512,7 +512,7 @@ html, body {
   content: '';
   position: absolute;
   inset: 0;
-  border: 4px solid #fcfcfc;
+  border: 4px solid #fff;
   pointer-events: none;
 }
 

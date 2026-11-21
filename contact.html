@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="ribbon-pull/js/scale.js?v=2" data-mode="page"></script>
+<title>Get in Touch — Dina Lin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ribbon-pull/nav.css?v=11">
+<style>
+  :root {
+    --page-max: 1440px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: #000000;
+    font-family: 'Figtree', sans-serif;
+  }
+
+  .page {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    position: relative;
+    height: 1260px;
+    overflow-x: visible;
+  }
+
+  .kiosk-title {
+    position: absolute;
+    left: 118px;
+    top: 130px;
+    margin: 0;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 900;
+    font-size: 96px;
+    z-index: 2;
+  }
+
+  .contact-sub {
+    position: absolute;
+    left: 118px;
+    top: 320px;
+    margin: 0;
+    font-weight: 500;
+    font-size: 24px;
+    color: #75a08b;
+  }
+
+  .contact-email {
+    position: absolute;
+    left: 118px;
+    top: 370px;
+    margin: 0;
+    font-weight: 700;
+    font-size: 90px;
+    line-height: 1;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 4px solid transparent;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .contact-email:hover,
+  .contact-email:focus-visible {
+    color: #75a08b;
+    border-bottom-color: #75a08b;
+  }
+
+  .contact-ribbon {
+    position: absolute;
+    left: 781px;
+    top: 197.5px;
+    width: 977px;
+    height: 971px;
+    transform: rotate(4.0595deg);
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo-mark" href="ribbon-pull/index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
+  <ul class="nav-links">
+    <li><a href="ribbon-pull/home.html">Projects</a></li>
+    <li><a href="ribbon-pull/side-works.html">Side Works</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <h1 class="kiosk-title">Get in Touch</h1>
+
+  <p class="contact-sub">I'd love to hear from you</p>
+  <a class="contact-email" href="mailto:dl9957@rit.edu">dl9957@rit.edu</a>
+  <img class="contact-ribbon" src="assets/contact/ribbon.svg" alt="">
+</div>
+
+</body>
+</html>
