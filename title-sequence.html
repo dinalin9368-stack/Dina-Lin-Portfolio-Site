@@ -30,7 +30,7 @@
   .page {
     max-width: var(--page-max);
     margin: 0 auto;
-    margin-top: 84px; /* clears the fixed nav (124px) with a 90px gap above the title */
+    margin-top: 104px; /* clears the fixed nav (124px) with a 97px gap above the title */
     position: relative;
     height: 6209px;
     overflow-x: visible;
@@ -41,7 +41,7 @@
   .kiosk-title {
     position: absolute;
     left: 118px;
-    top: 130px;
+    top: 117px;
     margin: 0;
     font-family: 'Figtree', sans-serif;
     font-weight: 700;
@@ -842,7 +842,7 @@
 <nav class="nav">
   <a class="logo-mark" href="ribbon-pull/index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
   <ul class="nav-links">
-    <li><a href="ribbon-pull/home.html">Projects</a></li>
+    <li><a href="ribbon-pull/home.html" class="active">Projects</a></li>
     <li><a href="ribbon-pull/side-works.html">Side Works</a></li>
     <li><a href="resume.html">Resume</a></li>
     <li><a href="contact.html">Contact</a></li>
@@ -1151,25 +1151,29 @@
     dot.addEventListener('click', () => goToWfStep(Number(dot.dataset.step)));
   });
 
-  const wfViewport = document.querySelector('.wf-viewport');
-  let wfWheelLocked = false;
-  let wfWheelIdleTimer = null;
+  // This page's workflow-cards section holds static storyboard images, not stepped .wf-slide
+  // carousel panels, so there's nothing to wheel-step through — skip hijacking scroll for it.
+  if (wfSlides.length) {
+    const wfViewport = document.querySelector('.wf-viewport');
+    let wfWheelLocked = false;
+    let wfWheelIdleTimer = null;
 
-  wfViewport.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    clearTimeout(wfWheelIdleTimer);
-    wfWheelIdleTimer = setTimeout(() => { wfWheelLocked = false; }, 200);
-    if (wfWheelLocked) return;
-    const direction = e.deltaY > 0 ? 1 : -1;
-    let next = wfIndex + direction;
-    if (direction > 0 && wfIndex === wfSlides.length - 1) {
-      next = 0;
-    } else if (next < 0 || next > wfSlides.length - 1) {
-      return;
-    }
-    wfWheelLocked = true;
-    goToWfStep(next);
-  }, { passive: false });
+    wfViewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      clearTimeout(wfWheelIdleTimer);
+      wfWheelIdleTimer = setTimeout(() => { wfWheelLocked = false; }, 200);
+      if (wfWheelLocked) return;
+      const direction = e.deltaY > 0 ? 1 : -1;
+      let next = wfIndex + direction;
+      if (direction > 0 && wfIndex === wfSlides.length - 1) {
+        next = 0;
+      } else if (next < 0 || next > wfSlides.length - 1) {
+        return;
+      }
+      wfWheelLocked = true;
+      goToWfStep(next);
+    }, { passive: false });
+  }
 
   document.querySelectorAll('.wf-slide-simple video, .mb-screen video, .phone-screen video').forEach((video) => {
     video.addEventListener('click', () => {
