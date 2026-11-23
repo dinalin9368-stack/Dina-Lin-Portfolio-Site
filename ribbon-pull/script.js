@@ -49,7 +49,7 @@ function layoutRibbon() {
 }
 
 const FRAME_VERSION = 2;   // bump when the frame files are replaced, so browsers do not keep showing the old ones
-const frameUrl = (i) => `assets/opening-frames/frame-${String(i + 1).padStart(3, '0')}.png?v=${FRAME_VERSION}`;
+const frameUrl = (i) => `ribbon-pull/assets/opening-frames/frame-${String(i + 1).padStart(3, '0')}.png?v=${FRAME_VERSION}`;
 
 let frames = new Array(FRAME_COUNT).fill(null);
 let playing = false;
