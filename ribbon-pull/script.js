@@ -124,7 +124,7 @@ function play() {
   const step = (now) => {
     const index = Math.floor(((now - t0) / 1000) * FPS);
     if (index >= FRAME_COUNT) {
-      window.location.href = 'home.html';
+      window.location.href = 'ribbon-pull/home.html';
       return;
     }
     if (index !== shown) {
