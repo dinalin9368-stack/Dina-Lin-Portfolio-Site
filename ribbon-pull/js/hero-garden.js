@@ -3,6 +3,7 @@
 // loop is seamless at 24fps (3s per cycle).
 const panel = document.querySelector('.hero-panel');
 const canvas = document.getElementById('heroGardenCanvas');
+const introLin = document.querySelector('.intro-lin');
 
 if (panel && canvas) {
   const ctx = canvas.getContext('2d');
@@ -12,6 +13,9 @@ if (panel && canvas) {
   const FRAME_W = 2940;
   const FRAME_H = 1912;
   const MAX_BACKING_WIDTH = 1600;
+  // Lowest visible pixel row across every frame (fence/leaves sit here; only the
+  // tulip heads sway above it) -- used to line the artwork up with the text.
+  const CONTENT_BOTTOM_FRAC = 1675 / FRAME_H;
 
   const frameUrl = (i) => `assets/home/garden/garden-${String(i).padStart(3, '0')}.png`;
 
@@ -39,6 +43,14 @@ if (panel && canvas) {
     drawScale = Math.min(canvas.width / FRAME_W, canvas.height / FRAME_H);
     drawOffsetX = (canvas.width - FRAME_W * drawScale) / 2;
     drawOffsetY = (canvas.height - FRAME_H * drawScale) / 2;
+
+    if (introLin) {
+      const linBottom = introLin.getBoundingClientRect().bottom;
+      const canvasRect = canvas.getBoundingClientRect();
+      const backingPerCssPx = canvasRect.height ? canvas.height / canvasRect.height : 1;
+      const targetBottom = (linBottom - canvasRect.top) * backingPerCssPx;
+      drawOffsetY = targetBottom - FRAME_H * drawScale * CONTENT_BOTTOM_FRAC;
+    }
   }
 
   async function decodeFrames() {
