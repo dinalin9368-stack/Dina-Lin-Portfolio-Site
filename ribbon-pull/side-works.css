@@ -170,7 +170,6 @@ html, body {
   --sticker: url('assets/side-works/sticker-acs.png');
   left: 764px; top: 2067px;
 }
-.sticker-acs:hover, .sticker-acs:focus-visible { --a: 50px; }
 
 .sticker-photo {
   --w: 80px; --h: 55.4px; --a: 17px; --tilt: 6deg;
@@ -201,7 +200,6 @@ html, body {
   transition: opacity 0.25s ease, visibility 0s linear 0.25s;
 }
 
-.caption-acs { left: 844px; top: 2095px; }
 .caption-photo { left: 594px; top: 3745px; }
 
 .sw-sticker:hover + .sw-caption,
