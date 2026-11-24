@@ -67,7 +67,7 @@
   .resume-keep-scrolling {
     position: absolute;
     left: 50%;
-    top: 820px;
+    top: 770px;
     transform: translateX(-50%);
     margin: 0;
     display: flex;
@@ -324,6 +324,9 @@
     display: block;
     line-height: 0;
     z-index: 11;
+    /* Fully visible by default, in the top section -- matches the Process
+       Doc. tag before it's tucked. */
+    transform: translateX(-263px);
     transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
@@ -331,12 +334,11 @@
 
   .resume-download img { display: block; width: 100%; height: 100%; }
 
-  /* Mostly off-canvas by default (only the ribbon's tip shows past the
-     1440px frame); hovering/focusing slides the whole ribbon into view,
-     matching the Process Doc. tag's tuck/reveal on the Alaska case study. */
-  .resume-download:hover,
-  .resume-download:focus-visible {
-    transform: translateX(-263px);
+  /* Once pinned (scrolled past the top section), tuck to mostly off-canvas
+     (only the tip shows past the 1440px frame); hovering/focusing slides it
+     back into view -- matching the Process Doc. tag's tuck/reveal. */
+  .resume-download.is-pinned:not(:hover):not(:focus-visible) {
+    transform: translateX(0);
   }
 
   .resume-download:focus-visible {
