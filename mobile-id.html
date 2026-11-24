@@ -378,21 +378,21 @@
   /* Back to top mountains */
   .back-to-top-mountains {
     position: absolute;
-    left: 0;
+    left: 50%;
     bottom: 0;
-    width: 100%;
+    width: 760px;
     height: auto;
     display: block;
     pointer-events: none;
     z-index: 2;
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateX(-50%) translateY(24px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
   .back-to-top-mountains.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 
   /* Back to top button */
