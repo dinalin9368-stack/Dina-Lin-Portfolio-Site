@@ -375,6 +375,26 @@
     z-index: 1;
   }
 
+  /* Back to top mountains */
+  .back-to-top-mountains {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .back-to-top-mountains.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   /* Back to top button */
   .back-to-top-button {
     position: absolute;
@@ -514,18 +534,22 @@
     </div>
   </div>
 
+  <img class="back-to-top-mountains" id="backToTopMountains" src="assets/alaska/back-to-top-mountains.png" alt="">
+
   <button class="back-to-top-button" id="backToTopButton" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
     <img src="assets/kiosk/back-to-top-button.svg" alt="">
   </button>
 </div>
 
 <script>
+  const mountains = document.getElementById('backToTopMountains');
   const button = document.getElementById('backToTopButton');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       entry.target.classList.toggle('visible', entry.isIntersecting);
     });
   }, { threshold: 0.15 });
+  observer.observe(mountains);
   observer.observe(button);
 
   const wfLightbox = document.getElementById('wfLightbox');
