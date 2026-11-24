@@ -1,6 +1,6 @@
 // Loops the hero-panel garden illustration: a 72-frame PNG sequence (transparent,
-// 2940 x 1912) exported from After Effects. Frames 0 and 71 are identical, so the
-// loop is seamless at 24fps (3s per cycle).
+// 2940 x 1912) exported from After Effects, played at 24fps (3s) then held for a
+// 2s pause before replaying from the first frame.
 const panel = document.querySelector('.hero-panel');
 const canvas = document.getElementById('heroGardenCanvas');
 const introLin = document.querySelector('.intro-lin');
@@ -10,6 +10,8 @@ if (panel && canvas) {
 
   const FRAME_COUNT = 72;
   const FPS = 24;
+  const PAUSE_SECONDS = 2;
+  const CYCLE_SECONDS = FRAME_COUNT / FPS + PAUSE_SECONDS;
   const FRAME_W = 2940;
   const FRAME_H = 1912;
   // Lowest visible pixel row across every frame (fence/leaves sit here; only the
@@ -94,7 +96,8 @@ if (panel && canvas) {
     if (raf || !ready) return;
     const t0 = performance.now();
     const step = (now) => {
-      const index = Math.floor(((now - t0) / 1000) * FPS) % FRAME_COUNT;
+      const t = ((now - t0) / 1000) % CYCLE_SECONDS;
+      const index = Math.min(Math.floor(t * FPS), FRAME_COUNT - 1);
       draw(index);
       raf = requestAnimationFrame(step);
     };
