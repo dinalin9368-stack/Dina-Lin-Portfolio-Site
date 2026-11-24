@@ -12,7 +12,6 @@ if (panel && canvas) {
   const FPS = 24;
   const FRAME_W = 2940;
   const FRAME_H = 1912;
-  const MAX_BACKING_WIDTH = 1600;
   // Lowest visible pixel row across every frame (fence/leaves sit here; only the
   // tulip heads sway above it) -- used to line the artwork up with the text.
   const CONTENT_BOTTOM_FRAC = 1675 / FRAME_H;
@@ -36,7 +35,9 @@ if (panel && canvas) {
   function layout() {
     const cssWidth = canvas.clientWidth || panel.clientWidth;
     const cssHeight = canvas.clientHeight || panel.clientHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, MAX_BACKING_WIDTH / Math.max(cssWidth, 1));
+    // The panel is fit by height, so cap the backing resolution against the
+    // frames' native height -- going higher would just upscale and blur them.
+    const dpr = Math.min(window.devicePixelRatio || 1, FRAME_H / Math.max(cssHeight, 1));
     canvas.width = Math.round(cssWidth * dpr);
     canvas.height = Math.round(cssHeight * dpr);
 
