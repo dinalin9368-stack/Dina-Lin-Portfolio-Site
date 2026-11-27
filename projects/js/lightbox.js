@@ -7,7 +7,7 @@ lightbox.setAttribute('role', 'dialog');
 lightbox.setAttribute('aria-modal', 'true');
 lightbox.setAttribute('aria-label', 'Enlarged view');
 lightbox.innerHTML = `
-  <button class="lightbox-close" type="button" aria-label="Close"><img src="assets/lightbox-close-button.svg" alt=""></button>
+  <button class="lightbox-close" type="button" aria-label="Close"><img src="/projects/assets/lightbox-close-button.svg" alt=""></button>
   <div class="lightbox-stage"></div>`;
 document.body.appendChild(lightbox);
 

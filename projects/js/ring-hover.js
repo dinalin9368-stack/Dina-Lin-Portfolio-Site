@@ -26,7 +26,7 @@ function initRingHover({ circleSelector, canvasId, folder, frameCount, duration 
   const frames = [];
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
-    img.src = `assets/home/${folder}/frame-${String(i).padStart(3, '0')}.png`;
+    img.src = `/projects/assets/home/${folder}/frame-${String(i).padStart(3, '0')}.png`;
     frames.push(img);
   }
 

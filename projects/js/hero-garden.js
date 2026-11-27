@@ -18,7 +18,7 @@ if (panel && canvas) {
   // tulip heads sway above it) -- used to line the artwork up with the text.
   const CONTENT_BOTTOM_FRAC = 1675 / FRAME_H;
 
-  const frameUrl = (i) => `assets/home/garden/garden-${String(i).padStart(3, '0')}.png`;
+  const frameUrl = (i) => `/projects/assets/home/garden/garden-${String(i).padStart(3, '0')}.png`;
 
   let frames = new Array(FRAME_COUNT).fill(null);
   let ready = false;

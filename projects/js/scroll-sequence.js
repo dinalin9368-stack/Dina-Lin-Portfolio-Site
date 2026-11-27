@@ -56,7 +56,7 @@ function initScrollSequence({ canvasId, folder, frameCount, getScrollStart, scro
         img.addEventListener('load', resolve);
         img.addEventListener('error', resolve);
       }));
-      img.src = `assets/home/${name}/frame-${String(i).padStart(3, '0')}.png?v=${FRAME_VERSION}`;
+      img.src = `/projects/assets/home/${name}/frame-${String(i).padStart(3, '0')}.png?v=${FRAME_VERSION}`;
       images.push(img);
     }
   }

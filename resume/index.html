@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="ribbon-pull/js/scale.js?v=2" data-mode="page"></script>
+<script src="/projects/js/scale.js?v=2" data-mode="page"></script>
 <title>Resume — Dina Lin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="ribbon-pull/nav.css?v=11">
+<link rel="stylesheet" href="/projects/nav.css?v=11">
 <style>
   :root {
     --page-max: 1440px;
@@ -415,17 +415,17 @@
 </head>
 <body>
 <nav class="nav">
-  <a class="logo-mark" href="index.html"><img src="assets/logo.svg" alt="Logo" width="45" height="45"></a>
+  <a class="logo-mark" href="/"><img src="/assets/logo.svg" alt="Logo" width="45" height="45"></a>
   <ul class="nav-links">
-    <li><a href="ribbon-pull/home.html">Projects</a></li>
-    <li><a href="ribbon-pull/side-works.html">Side Works</a></li>
-    <li><a href="resume.html" class="active">Resume</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/side-works/">Side Works</a></li>
+    <li><a href="/resume/" class="active">Resume</a></li>
+    <li><a href="/contact/">Contact</a></li>
   </ul>
 </nav>
 
-<a class="resume-download" href="assets/resume/Dina-Lin-Resume.pdf" download aria-label="Download resume (.pdf)">
-  <img src="assets/resume/download-ribbon.svg" alt="">
+<a class="resume-download" href="/assets/resume/Dina-Lin-Resume.pdf" download aria-label="Download resume (.pdf)">
+  <img src="/assets/resume/download-ribbon.svg" alt="">
 </a>
 
 <div class="page">
@@ -436,11 +436,11 @@
 
     <div class="resume-keep-scrolling">
       <span>keep scrolling</span>
-      <img src="assets/resume/hint-arrow.svg" alt="">
+      <img src="/assets/resume/hint-arrow.svg" alt="">
     </div>
 
     <p class="resume-hint">just a quick scan?</p>
-    <img class="resume-hint-arrow" src="assets/resume/hint-arrow.svg" alt="">
+    <img class="resume-hint-arrow" src="/assets/resume/hint-arrow.svg" alt="">
   </div>
 
   <div class="resume-story" id="resumeStory">
@@ -533,11 +533,11 @@
   </div>
 
   <a class="back-to-top" id="backToTop" href="#top" aria-label="Back to top">
-    <img src="assets/resume/back-to-top.svg" alt="">
+    <img src="/assets/resume/back-to-top.svg" alt="">
   </a>
 </div>
 
-<script src="ribbon-pull/js/back-to-top.js?v=1"></script>
+<script src="/projects/js/back-to-top.js?v=1"></script>
 <script>
   // Download ribbon: in its natural place in the top section until that
   // section scrolls fully past the top of the screen; after that it stays
@@ -631,7 +631,7 @@
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var frameUrl = function (i) {
-      return 'assets/resume/' + folder + '/frame-' + String(i + 1).padStart(3, '0') + '.png';
+      return '/assets/resume/' + folder + '/frame-' + String(i + 1).padStart(3, '0') + '.png';
     };
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var currentImg = null;
